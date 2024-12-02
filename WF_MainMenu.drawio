@@ -5,22 +5,22 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="677b7b8949515195-1" value="" style="whiteSpace=wrap;html=1;rounded=0;shadow=0;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fillColor=none;fontFamily=Verdana;fontSize=12;fontColor=#000000;align=center;comic=1;" parent="1" vertex="1">
-          <mxGeometry x="20" y="20" width="1060" height="810" as="geometry" />
+          <mxGeometry x="20" y="40" width="1060" height="790" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-2" value="4th Wall Cafe" style="whiteSpace=wrap;html=1;rounded=0;shadow=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=28;align=center;comic=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="60" width="300" height="50" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-4" value="Menu" style="text;html=1;points=[];align=left;verticalAlign=top;spacingTop=-4;fontSize=14;fontFamily=Verdana" parent="1" vertex="1">
-          <mxGeometry x="780" y="40" width="60" height="20" as="geometry" />
+          <mxGeometry x="780" y="50" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-5" value="Reports" style="text;html=1;points=[];align=left;verticalAlign=top;spacingTop=-4;fontSize=14;fontFamily=Verdana" parent="1" vertex="1">
-          <mxGeometry x="847.6" y="40" width="60" height="20" as="geometry" />
+          <mxGeometry x="847.6" y="50" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-6" value="Manage" style="text;html=1;points=[];align=left;verticalAlign=top;spacingTop=-4;fontSize=14;fontFamily=Verdana" parent="1" vertex="1">
-          <mxGeometry x="930" y="40" width="60" height="20" as="geometry" />
+          <mxGeometry x="930" y="50" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-7" value="Logout" style="text;html=1;points=[];align=left;verticalAlign=top;spacingTop=-4;fontSize=14;fontFamily=Verdana" parent="1" vertex="1">
-          <mxGeometry x="1000" y="40" width="60" height="20" as="geometry" />
+          <mxGeometry x="1000" y="50" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="677b7b8949515195-9" value="" style="line;strokeWidth=1;html=1;rounded=0;shadow=0;labelBackgroundColor=none;fillColor=none;fontFamily=Verdana;fontSize=14;fontColor=#000000;align=center;comic=1;" parent="1" vertex="1">
           <mxGeometry x="20" y="140" width="1060" height="10" as="geometry" />
@@ -45,7 +45,7 @@
             <mxPoint x="-17" y="-2.5" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xNktOV-b6tnxYs5pCYwV-14" value="Search" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.forms.searchBox;strokeColor=#999999;mainText=;strokeColor2=#008cff;fontColor=#666666;fontSize=17;align=left;spacingLeft=3;whiteSpace=wrap;" parent="1" vertex="1">
+        <mxCell id="xNktOV-b6tnxYs5pCYwV-14" value="Search Item" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.forms.searchBox;strokeColor=#999999;mainText=;strokeColor2=#008cff;fontColor=#666666;fontSize=17;align=left;spacingLeft=3;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="900" y="170" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="xNktOV-b6tnxYs5pCYwV-17" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.webicons.github;gradientColor=#DFDEDE" parent="1" vertex="1">
@@ -200,7 +200,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="z-67hpvK6l74vBA2kNS7-2" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
-          <mxGeometry x="770" y="60" width="60" height="10" as="geometry" />
+          <mxGeometry x="770" y="70" width="60" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="z-67hpvK6l74vBA2kNS7-3" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;4thWallCafe/Menu&lt;/span&gt;" style="html=1;strokeWidth=1;shadow=0;dashed=0;shape=mxgraph.ios7ui.url;fillColor=#e0e0e0;strokeColor=#c0c0c0;buttonText=;strokeColor2=#222222;fontColor=#222222;fontSize=8;spacingTop=2;align=center;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="1030" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
