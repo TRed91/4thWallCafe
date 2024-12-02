@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.MVC/4thWallCafe.MVC.csproj": {}
+    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.MVC\\4thWallCafe.MVC.csproj": {}
   },
   "projects": {
-    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.MVC/4thWallCafe.MVC.csproj": {
+    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.MVC\\4thWallCafe.MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.MVC/4thWallCafe.MVC.csproj",
+        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.MVC\\4thWallCafe.MVC.csproj",
         "projectName": "4thWallCafe.MVC",
-        "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.MVC/4thWallCafe.MVC.csproj",
-        "packagesPath": "/Users/thomasroth/.nuget/packages/",
-        "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.MVC/obj/",
+        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.MVC\\4thWallCafe.MVC.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.MVC\\obj\\",
         "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
