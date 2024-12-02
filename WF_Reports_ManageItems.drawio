@@ -68,13 +68,13 @@
           <mxGeometry x="100" y="170" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="HEE8X-NlxO-QjpKQm_0w-60" value="Items" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=none;fontColor=#0085FC;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" parent="1" vertex="1">
-          <mxGeometry x="930" y="165" width="60" height="40" as="geometry" />
+          <mxGeometry x="490" y="165" width="60" height="40" as="geometry" />
         </mxCell>
         <mxCell id="HEE8X-NlxO-QjpKQm_0w-61" value="Servers" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=none;fontColor=#0085FC;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=0;fontSize=16;spacing=5;" parent="1" vertex="1">
-          <mxGeometry x="1005" y="165" width="60" height="40" as="geometry" />
+          <mxGeometry x="565" y="165" width="60" height="40" as="geometry" />
         </mxCell>
         <mxCell id="HEE8X-NlxO-QjpKQm_0w-62" value="" style="line;strokeWidth=1;rotatable=0;dashed=0;labelPosition=right;align=left;verticalAlign=middle;spacingTop=0;spacingLeft=6;points=[];portConstraint=eastwest;" parent="1" vertex="1">
-          <mxGeometry x="930" y="190" width="60" height="10" as="geometry" />
+          <mxGeometry x="490" y="190" width="60" height="10" as="geometry" />
         </mxCell>
         <mxCell id="HEE8X-NlxO-QjpKQm_0w-64" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;4thWallCafe/Manage/Items&lt;/span&gt;" style="html=1;strokeWidth=1;shadow=0;dashed=0;shape=mxgraph.ios7ui.url;fillColor=#e0e0e0;strokeColor=#c0c0c0;buttonText=;strokeColor2=#222222;fontColor=#222222;fontSize=8;spacingTop=2;align=center;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="35" y="10" width="1030" height="20" as="geometry" />
@@ -281,7 +281,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="1vnCUF-EmJs2KefHrxTE-40" value="Search" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.forms.searchBox;strokeColor=#999999;mainText=;strokeColor2=#008cff;fontColor=#666666;fontSize=17;align=left;spacingLeft=3;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="475" y="170" width="150" height="30" as="geometry" />
+          <mxGeometry x="907.6" y="170" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="1vnCUF-EmJs2KefHrxTE-41" value="Item" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#6C767D;fontColor=#ffffff;whiteSpace=wrap;align=right;verticalAlign=middle;fontStyle=0;fontSize=14;spacingRight=20;" parent="1" vertex="1">
           <mxGeometry x="160" y="165" width="140" height="40" as="geometry" />
