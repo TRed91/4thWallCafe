@@ -22,4 +22,8 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\4thWallCafe.App\4thWallCafe.App.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -13,4 +13,8 @@
       <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.0-preview3.24332.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\4thWallCafe.Core\4thWallCafe.Core.csproj" />
+    </ItemGroup>
+
 </Project>

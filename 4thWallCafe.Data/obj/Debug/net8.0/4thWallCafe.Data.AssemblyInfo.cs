@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("4thWallCafe.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff3904dfe6b67673c3cdda3a7ed9e7d0502b335b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f50095c5b5bd9cfda92daa5fc05c72600802b587")]
 [assembly: System.Reflection.AssemblyProductAttribute("4thWallCafe.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("4thWallCafe.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

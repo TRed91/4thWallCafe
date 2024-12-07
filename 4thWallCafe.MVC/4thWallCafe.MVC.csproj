@@ -7,4 +7,8 @@
         <RootNamespace>_4thWallCafe.MVC</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\4thWallCafe.App\4thWallCafe.App.csproj" />
+    </ItemGroup>
+
 </Project>
