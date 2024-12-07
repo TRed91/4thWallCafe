@@ -77,6 +77,18 @@ public class ServerRepository : IServerRepository
 
     public void TerminateServer(int id)
     {
-        throw new NotImplementedException();
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE [Server] SET 
+                    TermDate = @TermDate 
+                WHERE ServerID = @id;";
+            var p = new
+            {
+                id,
+                TermDate = DateTime.Now
+            };
+            
+            cn.Execute(sql, p);
+        }
     }
 }
