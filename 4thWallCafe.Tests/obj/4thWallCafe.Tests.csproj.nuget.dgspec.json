@@ -1,40 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj": {}
+    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj": {
+    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj",
+        "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj",
         "projectName": "4thWallCafe.App",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\obj\\",
+        "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\4thWallCafe.Data.csproj": {
-                "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\4thWallCafe.Data.csproj"
+              "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/4thWallCafe.Data.csproj": {
+                "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/4thWallCafe.Data.csproj"
               }
             }
           }
@@ -69,33 +62,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\4thWallCafe.Core.csproj": {
+    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/4thWallCafe.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\4thWallCafe.Core.csproj",
+        "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/4thWallCafe.Core.csproj",
         "projectName": "4thWallCafe.Core",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\4thWallCafe.Core.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\obj\\",
+        "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/4thWallCafe.Core.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -134,41 +120,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\4thWallCafe.Data.csproj": {
+    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/4thWallCafe.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\4thWallCafe.Data.csproj",
+        "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/4thWallCafe.Data.csproj",
         "projectName": "4thWallCafe.Data",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\4thWallCafe.Data.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Data\\obj\\",
+        "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/4thWallCafe.Data.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Data/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\4thWallCafe.Core.csproj": {
-                "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Core\\4thWallCafe.Core.csproj"
+              "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/4thWallCafe.Core.csproj": {
+                "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Core/4thWallCafe.Core.csproj"
               }
             }
           }
@@ -217,41 +196,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj": {
+    "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj",
+        "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj",
         "projectName": "4thWallCafe.Tests",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\obj\\",
+        "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj": {
-                "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj"
+              "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj": {
+                "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj"
               }
             }
           }
@@ -308,7 +280,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

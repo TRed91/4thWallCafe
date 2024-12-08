@@ -7,11 +7,11 @@ using Microsoft.Data.SqlClient;
 
 namespace _4thWallCafe.Data.Repositories;
 
-public class CafeOrderRepositoy : ICafeOrderRepository
+public class CafeOrderRepository : ICafeOrderRepository
 {
     private readonly string _connectionString;
 
-    public CafeOrderRepositoy(string connectionString)
+    public CafeOrderRepository(string connectionString)
     {
         _connectionString = connectionString;
     }
@@ -62,33 +62,70 @@ public class CafeOrderRepositoy : ICafeOrderRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql = @"SELECT * FROM CafeOrder
-                        WHERE ServerID = @serverId;";
+            var sql = @"SELECT * FROM CafeOrder WHERE ServerID = @serverId;";
             return cn.Query<CafeOrder>(sql, new { serverId }).ToList();
         }
     }
 
     public CafeOrder? GetCafeOrder(int orderId)
     {
-        var order = new CafeOrder();
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql1 = "SELECT * FROM CafeOrder WHERE OrderID = @orderId;";
-            var sql2 = "SELECT * FROM [Server] WHERE ServerID = @serverId;";
-            var sql3 = "SELECT * FROM PaymentType WHERE PaymentTypeID = @paymentTypeId;";
-            var sql4 = "SELECT * FROM OrderItem WHERE OrderID = @orderId;";
-            
-            order = cn.QueryFirstOrDefault<CafeOrder>(sql1, new { orderId });
-            
-            if (order == null) return null;
-            
-            order.Server = cn.QueryFirst<Server>(sql2, 
-                new { serverId = order.ServerID });
-            order.PaymentType = cn.QueryFirst<PaymentType>(sql3, 
-                new { paymentTypeId = order.PaymentTypeID });
-            order.OrderItems = cn.Query<OrderItem>(sql4,
-                new { orderId }).ToList();
-            
+            var sql = @"SELECT * FROM CafeOrder WHERE OrderID = @orderId;
+                        SELECT * FROM [Server] WHERE ServerID = @serverId;
+                        SELECT * FROM PaymentType WHERE PaymentTypeID = @paymentTypeId;";
+
+            var sql2 = @"SELECT * FROM OrderItem oi
+                        INNER JOIN ItemPrice ip ON ip.ItemPriceID = oi.ItemPriceID
+                        INNER JOIN Item i ON i.ItemID = ip.ItemID
+                        INNER JOIN Category c ON c.CategoryID = i.CategoryID
+                        WHERE OrderID = @orderId;";
+
+            var order = new CafeOrder();
+            using (var multi = cn.QueryMultiple(sql, new { orderId }))
+            {
+                order = multi.ReadFirst<CafeOrder>();
+                order.Server = multi.ReadFirst<Server>();
+                order.PaymentType = multi.ReadFirst<PaymentType>();
+                order.OrderItems = new List<OrderItem>();
+            }
+            var cmd = new SqlCommand(sql2, cn);
+
+            using (var dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    var orderItem = new OrderItem();
+                    orderItem.OrderItemID = (int)dr["OrderItemID"];
+                    orderItem.OrderID = (int)dr["OrderID"];
+                    orderItem.ItemPriceID = (int)dr["ItemPriceID"];
+                    orderItem.Quantity = (byte)dr["Quantity"];
+                    orderItem.ExtendedPrice = (decimal)dr["ExtendedPrice"];
+                    orderItem.ItemPrice = new ItemPrice
+                    {
+                        ItemPriceID = (int)dr["ItemPriceID"],
+                        ItemID = (int)dr["ItemID"],
+                        TimeOfDayID = (int)dr["TimeOfDayID"],
+                        Price = (decimal)dr["Price"],
+                        StartDate = (DateOnly)dr["StartDate"],
+                        EndDate = (DateOnly)dr["EndDate"],
+                        Item = new Item
+                        {
+                            ItemID = (int)dr["ItemID"],
+                            CategoryID = (int)dr["CategoryID"],
+                            ItemName = (string)dr["ItemName"],
+                            ItemDescription = (string)dr["ItemDescription"],
+                            Category = new Category
+                            {
+                                CategoryID = (int)dr["CategoryID"],
+                                CategoryName = (string)dr["CategoryName"],
+                            }
+                        }
+                    };
+                    order.OrderItems.Add(orderItem);
+                }
+            }
+
             return order;
         }
     }

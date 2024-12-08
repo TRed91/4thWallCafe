@@ -2,13 +2,15 @@
 
 namespace _4thWallCafe.Core.Interfaces;
 
-public interface IItemsRepository
+public interface IItemRepository
 {
     List<Item> GetAllItems();
     List<Item> GetItemsByCategory(int categoryId);
     List<Item> GetItemsByTimeOfDay(int timeOfDayId);
     List<Item> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
     void AddItem(Item item);
+    void AddItemPrice(ItemPrice itemPrice);
     void UpdateItem(Item item);
-    void DeleteItem(Item item);
+    void UpdateItemPrice(ItemPrice itemPrice);
+    void DeleteItem(int itemId);
 }

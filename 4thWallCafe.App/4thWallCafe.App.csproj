@@ -11,4 +11,8 @@
       <ProjectReference Include="..\4thWallCafe.Data\4thWallCafe.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
