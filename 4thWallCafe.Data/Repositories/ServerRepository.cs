@@ -85,7 +85,7 @@ public class ServerRepository : IServerRepository
             var p = new
             {
                 id,
-                TermDate = DateTime.Now
+                TermDate = DateOnly.FromDateTime(DateTime.Now)
             };
             
             cn.Execute(sql, p);

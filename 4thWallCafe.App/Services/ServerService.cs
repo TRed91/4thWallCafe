@@ -1,13 +1,14 @@
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces;
 using _4thWallCafe.Core.Interfaces.Services;
+using _4thWallCafe.Core.Models;
 using _4thWallCafe.Core.Utilities;
 
 namespace _4thWallCafe.App.Services;
 
 public class ServerService : IServerService
 {
-    public readonly IServerRepository _serverRepository;
+    private readonly IServerRepository _serverRepository;
 
     public ServerService(IServerRepository serverRepository)
     {
@@ -45,12 +46,20 @@ public class ServerService : IServerService
         }
     }
 
-    public Result AddServer(Server server)
+    public Result AddServer(ServerForm serverForm)
     {
-        if (server.DoB >= DateOnly.FromDateTime(DateTime.Now.AddYears(-18)))
+        if (serverForm.DoB >= DateTime.Now.AddYears(-18))
         {
             return ResultFactory.Fail("Server must be more than 18 years old");
         }
+
+        var server = new Server
+        {
+            FirstName = serverForm.FirstName,
+            LastName = serverForm.LastName,
+            DoB = DateOnly.FromDateTime(serverForm.DoB),
+            HireDate = DateOnly.FromDateTime(DateTime.Today),
+        };
         try
         {
             _serverRepository.AddServer(server);
@@ -62,15 +71,23 @@ public class ServerService : IServerService
         }
     }
 
-    public Result UpdateServer(Server server)
+    public Result UpdateServer(int id, ServerForm serverForm)
     {
-        if (server.DoB >= DateOnly.FromDateTime(DateTime.Now.AddYears(-18)))
+        if (serverForm.DoB >= DateTime.Now.AddYears(-18))
         {
             return ResultFactory.Fail("Server must be more than 18 years old");
         }
-
         try
         {
+            var server = _serverRepository.GetServerById(id);
+            if (server == null)
+            {
+                return ResultFactory.Fail<Server>("Server not found");
+            }
+            server.FirstName = serverForm.FirstName;
+            server.LastName = serverForm.LastName;
+            server.DoB = DateOnly.FromDateTime(serverForm.DoB);
+            
             _serverRepository.UpdateServer(server);
             return ResultFactory.Success();
         }
