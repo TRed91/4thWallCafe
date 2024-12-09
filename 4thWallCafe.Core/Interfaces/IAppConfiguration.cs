@@ -1,0 +1,8 @@
+namespace _4thWallCafe.Core.Interfaces;
+
+public interface IAppConfiguration
+{
+    IServerRepository GetServerRepository();
+    IItemRepository GetItemRepository();
+    ICafeOrderRepository GetCafeOrderRepository();
+}
