@@ -8,6 +8,9 @@ public interface IItemRepository
     List<Item> GetItemsByCategory(int categoryId);
     List<Item> GetItemsByTimeOfDay(int timeOfDayId);
     List<Item> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
+    Item? GetItemById(int id);
+    
+    ItemPrice? GetItemPriceById(int id);
     void AddItem(Item item);
     void AddItemPrice(ItemPrice itemPrice);
     void UpdateItem(Item item);

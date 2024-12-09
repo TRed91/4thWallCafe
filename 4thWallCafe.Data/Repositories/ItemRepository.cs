@@ -101,6 +101,33 @@ public class ItemRepository : IItemRepository
         }
     }
 
+    public Item? GetItemById(int id)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT * FROM Item WHERE ItemID = @id;
+                        SELECT * FROM ItemPrice WHERE ItemID = @id;";
+
+            using (var multi = cn.QueryMultiple(sql, new { id }))
+            {
+                var item = multi.ReadFirst<Item>();
+                item.ItemPrices = multi.Read<ItemPrice>().AsList();
+                
+                return item;
+            }
+        }
+    }
+
+    public ItemPrice? GetItemPriceById(int id)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.QueryFirstOrDefault<ItemPrice>(
+                "SELECT * FROM ItemPrice WHERE ItemPriceID = @id;", 
+                new { id });
+        }
+    }
+
     public void AddItem(Item item)
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -110,10 +137,10 @@ public class ItemRepository : IItemRepository
                 SELECT SCOPE_IDENTITY()";
             var p = new
             {
-                ItemID = item.ItemID,
-                CategoryID = item.CategoryID,
-                ItemName = item.ItemName,
-                ItemDescription = item.ItemDescription
+                item.ItemID,
+                item.CategoryID,
+                item.ItemName,
+                item.ItemDescription
             };
             item.ItemID = cn.ExecuteScalar<int>(sql, p);
         }

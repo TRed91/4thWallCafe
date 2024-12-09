@@ -1,6 +1,7 @@
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces;
 using _4thWallCafe.Core.Interfaces.Services;
+using _4thWallCafe.Core.Models;
 using _4thWallCafe.Core.Utilities;
 
 namespace _4thWallCafe.App.Services;
@@ -67,18 +68,75 @@ public class ItemService : IItemService
         }
     }
 
-    public Result AddItem(Item item)
+    public Result AddItem(ItemForm itemForm)
     {
-        throw new NotImplementedException();
+        var item = new Item
+        {
+            ItemName = itemForm.ItemName,
+            ItemDescription = itemForm.ItemDescription,
+            CategoryID = itemForm.CategoryId,
+        };
+        try
+        {
+            _itemRepository.AddItem(item);
+            var itemPrices = itemForm.PriceFields.Select(p => new ItemPrice
+            {
+                ItemID = item.ItemID,
+                Price = p.Price,
+                TimeOfDayID = p.TimeOfDayId,
+                StartDate = DateOnly.FromDateTime(DateTime.Today),
+            }).ToList();
+            foreach (var price in itemPrices)
+            {
+                _itemRepository.AddItemPrice(price);
+            }
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
     }
 
-    public Result UpdateItem(Item item)
+    public Result UpdateItem(int id, ItemForm itemForm)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var item = _itemRepository.GetItemById(id);
+            if (item == null)
+            {
+                return ResultFactory.Fail("Item not found");
+            }
+            item.ItemName = itemForm.ItemName;
+            item.ItemDescription = itemForm.ItemDescription;
+            item.CategoryID = itemForm.CategoryId;
+            _itemRepository.UpdateItem(item);
+            foreach (var price in item.ItemPrices)
+            {
+                price.Price = itemForm.PriceFields
+                    .Where(p => p.TimeOfDayId == price.TimeOfDayID)
+                    .Select(p => p.Price)
+                    .First();
+                _itemRepository.UpdateItemPrice(price);
+            }
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
     }
 
-    public Result DeleteItem(Item item)
+    public Result DeleteItem(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _itemRepository.DeleteItem(id);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
     }
 }
