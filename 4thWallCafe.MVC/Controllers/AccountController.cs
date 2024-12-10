@@ -9,13 +9,16 @@ public class AccountController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly ILogger _logger;
     
     public AccountController(
         UserManager<IdentityUser> userManager, 
-        SignInManager<IdentityUser> signInManager)
+        SignInManager<IdentityUser> signInManager,
+        ILogger<AccountController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -38,6 +41,7 @@ public class AccountController : Controller
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                _logger.LogInformation("User created a new account with password.");
                 await _signInManager.SignInAsync(user, false);
                 return RedirectToAction("Index", "Home");
             }

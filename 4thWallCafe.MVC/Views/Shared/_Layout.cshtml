@@ -30,6 +30,20 @@
             </li>
         </ul>
     </header>
+    @{
+        if (TempData["message"] != null)
+        {
+            var message = TempDataExtension.Get<TempDataMessage>(TempData, "message");
+            if (message.Success)
+            {
+                <p class="bg-success text-white p-1 fs-5 text-center">@message.Message</p>
+            }
+            else
+            {
+                <p class="bg-danger text-white p-1 fs-5 text-center">@message.Message</p>
+            }
+        }
+    }
     
 @RenderBody()
     
