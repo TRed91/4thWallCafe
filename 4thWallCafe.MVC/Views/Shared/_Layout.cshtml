@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4">4th Wall Cafe</span>
+        </a>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="#" class="nav-link">Menu</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Reports</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Manage</a>
+            </li>
+            <li class="nav-item">
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn-link text-decoration-none nav-link">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </header>
+    
+@RenderBody()
+    
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <span class="mb-3 mb-md-0 text-body-secondary">by Thomas Roth</span>
+        </div>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex flex-column">
+            <li class="ms-3">
+                <a href="#" class="text-body-secondary text-decoration-none">
+                    Github
+                </a>
+            </li>
+            <li class="ms-3">
+                <a href="#" class="text-body-secondary text-decoration-none">
+                    Linked In
+                </a>
+            </li>
+            <li class="ms-3">
+                <a href="#" class="text-body-secondary text-decoration-none">
+                    Email
+                </a>
+            </li>
+        </ul>
+    </footer>
+</div>
+</body>
+</html>
