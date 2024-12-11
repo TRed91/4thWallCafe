@@ -41,30 +41,66 @@ public class ItemService : IItemService
         }
     }
 
-    public Result<List<Item>> GetItemByTimeOfDay(int timeOfDayId)
+    public Result<List<MenuItem>> GetItemByTimeOfDay(int timeOfDayId)
     {
         try
         {
             var items = _itemRepository.GetItemsByTimeOfDay(timeOfDayId);
-            return ResultFactory.Success(items);
+            var menuItems = new List<MenuItem>();
+            foreach (var item in items)
+            {
+                menuItems.Add(new MenuItem(item));
+            }
+            return ResultFactory.Success(menuItems);
         }
         catch (Exception ex)
         {
-            return ResultFactory.Fail<List<Item>>(ex.Message);
+            return ResultFactory.Fail<List<MenuItem>>(ex.Message);
         }
     }
 
-    public Result<List<Item>> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId)
+    public Result<List<MenuItem>> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId)
     {
         try
         {
             var items = _itemRepository.GetItemsByCategoryAndTimeOfDay(
                 categoryId, timeOfDayId);
-            return ResultFactory.Success(items);
+            var menuItems = new List<MenuItem>();
+            foreach (var item in items)
+            {
+                menuItems.Add(new MenuItem(item));
+            }
+            return ResultFactory.Success(menuItems);
         }
         catch (Exception ex)
         {
-            return ResultFactory.Fail<List<Item>>(ex.Message);
+            return ResultFactory.Fail<List<MenuItem>>(ex.Message);
+        }
+    }
+
+    public Result<List<Category>> GetCategories()
+    {
+        try
+        {
+            var categories = _itemRepository.GetCategories();
+            return ResultFactory.Success(categories);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<Category>>(ex.Message);
+        }
+    }
+
+    public Result<List<TimeOfDay>> GetTimeOfDays()
+    {
+        try
+        {
+            var timeOfDays = _itemRepository.GetTimeOfDays();
+            return ResultFactory.Success(timeOfDays);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<TimeOfDay>>(ex.Message);
         }
     }
 

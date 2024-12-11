@@ -34,31 +34,38 @@ public class ItemRepository : IItemRepository
         }
     }
 
-    public List<Item> GetItemsByTimeOfDay(int timeOfDayId)
+    public List<ItemPrice> GetItemsByTimeOfDay(int timeOfDayId)
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var items = new List<Item>();
+            var items = new List<ItemPrice>();
             
             var sql = @"SELECT * FROM ItemPrice ip
                         INNER JOIN Item i ON i.ItemID = ip.ItemID
                         INNER JOIN Category c ON c.CategoryID = i.CategoryID
-                        WHERE TimeOfDayID = @timeOfDayId AND EndDate IS NULL";
-            
+                        WHERE TimeOfDayID = @timeOfDayId AND EndDate IS NULL
+                        ORDER BY CategoryName, ItemName";
+
             var cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            
             cmd.Parameters.AddWithValue("@timeOfDayId", timeOfDayId);
             using (var dr = cmd.ExecuteReader())
             {
                 while (dr.Read())
                 {
-                    var item = new Item();
+                    var item = new ItemPrice();
                     item.ItemID = (int)dr["ItemID"];
-                    item.CategoryID = (int)dr["CategoryID"];
-                    item.ItemName = (string)dr["ItemName"];
-                    item.ItemDescription = (string)dr["ItemDescription"];
-                    item.Category = new Category();
-                    item.Category.CategoryID = (int)dr["CategoryID"];
-                    item.Category.CategoryName = (string)dr["CategoryName"];
+                    item.Price = (decimal)dr["Price"];
+                    item.StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]);
+                    item.TimeOfDayID = (int)dr["TimeOfDayID"];
+                    item.Item = new Item();
+                    item.Item.CategoryID = (int)dr["CategoryID"];
+                    item.Item.ItemName = (string)dr["ItemName"];
+                    item.Item.ItemDescription = (string)dr["ItemDescription"];
+                    item.Item.Category = new Category();
+                    item.Item.Category.CategoryID = (int)dr["CategoryID"];
+                    item.Item.Category.CategoryName = (string)dr["CategoryName"];
                     items.Add(item);
                 }
             }
@@ -66,11 +73,11 @@ public class ItemRepository : IItemRepository
         }
     }
 
-    public List<Item> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId)
+    public List<ItemPrice> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId)
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var items = new List<Item>();
+            var items = new List<ItemPrice>();
             
             var sql = @"SELECT * FROM ItemPrice ip
                         INNER JOIN Item i ON i.ItemID = ip.ItemID
@@ -79,6 +86,8 @@ public class ItemRepository : IItemRepository
                           AND c.CategoryID = @categoryId
                           AND EndDate IS NULL";
             
+            cn.Open();
+            
             var cmd = new SqlCommand(sql, cn);
             cmd.Parameters.AddWithValue("@timeOfDayId", timeOfDayId);
             cmd.Parameters.AddWithValue("@categoryId", categoryId);
@@ -86,14 +95,18 @@ public class ItemRepository : IItemRepository
             {
                 while (dr.Read())
                 {
-                    var item = new Item();
+                    var item = new ItemPrice();
                     item.ItemID = (int)dr["ItemID"];
-                    item.CategoryID = (int)dr["CategoryID"];
-                    item.ItemName = (string)dr["ItemName"];
-                    item.ItemDescription = (string)dr["ItemDescription"];
-                    item.Category = new Category();
-                    item.Category.CategoryID = (int)dr["CategoryID"];
-                    item.Category.CategoryName = (string)dr["CategoryName"];
+                    item.Price = (decimal)dr["Price"];
+                    item.StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]);
+                    item.TimeOfDayID = (int)dr["TimeOfDayID"];
+                    item.Item = new Item();
+                    item.Item.CategoryID = (int)dr["CategoryID"];
+                    item.Item.ItemName = (string)dr["ItemName"];
+                    item.Item.ItemDescription = (string)dr["ItemDescription"];
+                    item.Item.Category = new Category();
+                    item.Item.Category.CategoryID = (int)dr["CategoryID"];
+                    item.Item.Category.CategoryName = (string)dr["CategoryName"];
                     items.Add(item);
                 }
             }
@@ -125,6 +138,22 @@ public class ItemRepository : IItemRepository
             return cn.QueryFirstOrDefault<ItemPrice>(
                 "SELECT * FROM ItemPrice WHERE ItemPriceID = @id;", 
                 new { id });
+        }
+    }
+
+    public List<Category> GetCategories()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.Query<Category>("SELECT * FROM Category;").ToList();
+        }
+    }
+
+    public List<TimeOfDay> GetTimeOfDays()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.Query<TimeOfDay>("SELECT * FROM TimeOfDay;").ToList();
         }
     }
 

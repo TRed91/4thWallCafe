@@ -9,8 +9,6 @@ public class HomeController : Controller
     [Authorize]
     public IActionResult Index()
     {
-        var msg = new TempDataMessage(false, "Fail: Error Message");
-        TempDataExtension.Put(TempData, "message", msg);
         return View();
     }
 }

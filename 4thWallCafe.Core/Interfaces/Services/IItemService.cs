@@ -8,8 +8,10 @@ public interface IItemService
 {
     Result<List<Item>> GetItems();
     Result<List<Item>> GetItemsByCategory(int categoryId);
-    Result<List<Item>> GetItemByTimeOfDay(int timeOfDayId);
-    Result<List<Item>> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
+    Result<List<MenuItem>> GetItemByTimeOfDay(int timeOfDayId);
+    Result<List<MenuItem>> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
+    Result<List<Category>> GetCategories();
+    Result<List<TimeOfDay>> GetTimeOfDays();
     Result AddItem(ItemForm itemForm);
     Result UpdateItem(int id, ItemForm itemForm);
     Result DeleteItem(int id);

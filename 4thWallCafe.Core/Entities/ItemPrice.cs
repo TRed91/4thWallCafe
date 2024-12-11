@@ -7,7 +7,7 @@ public class ItemPrice
     public int TimeOfDayID { get; set; }
     public decimal Price { get; set; }
     public DateOnly StartDate { get; set; }
-    public DateOnly EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     
     public Item Item { get; set; }
     public TimeOfDay TimeOfDay { get; set; }

@@ -6,11 +6,13 @@ public interface IItemRepository
 {
     List<Item> GetAllItems();
     List<Item> GetItemsByCategory(int categoryId);
-    List<Item> GetItemsByTimeOfDay(int timeOfDayId);
-    List<Item> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
+    List<ItemPrice> GetItemsByTimeOfDay(int timeOfDayId);
+    List<ItemPrice> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
     Item? GetItemById(int id);
     
     ItemPrice? GetItemPriceById(int id);
+    List<Category> GetCategories();
+    List<TimeOfDay> GetTimeOfDays();
     void AddItem(Item item);
     void AddItemPrice(ItemPrice itemPrice);
     void UpdateItem(Item item);
