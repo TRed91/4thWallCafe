@@ -3,45 +3,56 @@
 @{
     ViewData["Title"] = "4th Wall Cafe : Revenue Reports";
 }
-
-<div class="table-responsive p-3 bg-body-tertiary">
-    <form asp-controller="Menu" asp-action="Index" method="post" class="d-flex flex-wrap gap-4 align-items-center">
+<main>
+<div class="table-responsive p-3 bg-body-tertiary d-flex justify-content-between overflow-auto">
+    <form asp-controller="Reports" asp-action="Orders" method="post" class="d-flex flex-wrap gap-4 align-items-center">
         @Html.AntiForgeryToken()
         <div class="d-flex gap-2 align-items-center">
             <label asp-for="Form.FromDate" class="form-label fs-5">From: </label>
-            <input type="date" asp-for="Form.FromDate" class="form-control"/>
+            <input asp-for="Form.FromDate" class="form-control"/>
         </div>
         <div class="d-flex gap-2 align-items-center">
             <label asp-for="Form.ToDate" class="form-label fs-5">To: </label>
-            <input type="date" asp-for="Form.ToDate" class="form-control"/>
+            <input asp-for="Form.ToDate" class="form-control"/>
         </div>
-        <div class="d-flex align-items-center">
-            <label asp-for="Form.OrderBy" class="form-label fs-5">Order By: </label>
+        <div class="d-flex gap-2 align-items-center">
+            <label asp-for="Form.OrderBy" class="form-label fs-6">Order By: </label>
             <select asp-for="Form.OrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
         </div>
         <button type="submit" class="btn btn-primary">Apply</button>
     </form>
+    <ul class="nav nav-pills">
+        <li class="nav-item m-2 fs-5"><a class="link-underline">Orders</a></li>
+        <li class="nav-item m-2 fs-5"><a class="text-decoration-none">Items</a></li>
+    </ul>
 </div>
-<div class="mt-3">
-    <table class="table table-bordered">
-        <thead>
+<div class="table-responsive d-flex flex-wrap flex-sm-nowrap mt-3">
+    <div class="card p-2 m-3 flex-shrink-1 h-25 align-self-center" style="width:300px;">
+        <p class="lead text-center">Total Revenue</p>
+        <h2 class="text-success text-center">$@Model.TotalRevenue</h2>
+    </div>
+    <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-primary">
             <tr>
                 <th>Order ID</th>
                 <th>Server</th>
                 <th>Order Total</th>
                 <th></th>
             </tr>
-        </thead>
-        <tbody>
-        @foreach (var order in Model.OrderReports)
-        {
-            <tr>
-                <td class="menu-table-cell-1">@order.OrderId</td>
-                <td class="menu-table-cell-2">@order.ServerName</td>
-                <td class="menu-table-cell-3">$@order.OrderTotal</td>
-                <td></td>
-            </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach (var order in Model.OrderReports)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.ServerName</td>
+                    <td>$@order.OrderTotal</td>
+                    <td><a href="">Details</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </div>
+</main>

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using _4thWallCafe.Core.Models;
 using _4thWallCafe.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +15,9 @@ public class OrderReportsModel
 
 public class OrderReportForm
 {
+    [DataType(DataType.Date)]
     public DateTime FromDate { get; set; }
+    [DataType(DataType.Date)]
     public DateTime ToDate { get; set; }
     public SelectOrderBy OrderBy { get; set; }
 }

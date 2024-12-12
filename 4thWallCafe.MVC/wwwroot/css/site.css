@@ -9,3 +9,7 @@
 .menu-table-cell-3{
     width: 10%;
 }
+
+.table-responsive {
+    max-height: 70vh;
+}

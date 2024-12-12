@@ -3247,32 +3247,40 @@
     ]
   },
   "packageFolders": {
-    "/Users/thomasroth/.nuget/packages/": {}
+    "C:\\Users\\thoma\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj",
       "projectName": "4thWallCafe.Tests",
-      "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/4thWallCafe.Tests.csproj",
-      "packagesPath": "/Users/thomasroth/.nuget/packages/",
-      "outputPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.Tests/obj/",
+      "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\4thWallCafe.Tests.csproj",
+      "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "UsingMicrosoftNETSdk": false,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj": {
-              "projectPath": "/Users/thomasroth/repos/c#/4thWallCafe/4thWallCafe.App/4thWallCafe.App.csproj"
+            "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj": {
+              "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\4thWallCafe.App.csproj"
             }
           }
         }
@@ -3329,7 +3337,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
