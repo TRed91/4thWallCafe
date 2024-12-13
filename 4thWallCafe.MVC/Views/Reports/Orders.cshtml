@@ -5,7 +5,7 @@
 }
 <main>
 <div class="table-responsive p-3 bg-body-tertiary d-flex justify-content-between overflow-auto">
-    <form asp-controller="Reports" asp-action="Orders" method="post" class="d-flex flex-wrap gap-4 align-items-center">
+    <form asp-controller="Reports" asp-action="Orders" method="get" class="d-flex flex-wrap gap-4 align-items-center">
         @Html.AntiForgeryToken()
         <div class="d-flex gap-2 align-items-center">
             <label asp-for="Form.FromDate" class="form-label fs-5">From: </label>
@@ -16,8 +16,8 @@
             <input asp-for="Form.ToDate" class="form-control"/>
         </div>
         <div class="d-flex gap-2 align-items-center">
-            <label asp-for="Form.OrderBy" class="form-label fs-6">Order By: </label>
-            <select asp-for="Form.OrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
+            <label asp-for="Form.OrderReportsOrderBy" class="form-label fs-6">Order By: </label>
+            <select asp-for="Form.OrderReportsOrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
         </div>
         <button type="submit" class="btn btn-primary">Apply</button>
     </form>

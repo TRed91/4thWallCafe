@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace _4thWallCafe.MVC.Models;
 
+/// <summary>
+/// This model is passed to the view
+/// </summary>
 public class OrderReportsModel
 {
     public List<OrderReport> OrderReports { get; set; }
@@ -19,11 +22,15 @@ public class OrderReportForm
     public DateTime FromDate { get; set; }
     [DataType(DataType.Date)]
     public DateTime ToDate { get; set; }
-    public SelectOrderBy OrderBy { get; set; }
+    public OrderReportsOrderBy OrderReportsOrderBy { get; set; }
 }
 
 public static class ReportsUtilities
 {
+    /// <summary>
+    /// Path to selelctlist instance constructor
+    /// </summary>
+    /// <returns>List of OrderBy Select Options</returns>
     public static List<OrderBySelectItem> GetSelectList()
     {
         return new List<OrderBySelectItem>
@@ -35,6 +42,9 @@ public static class ReportsUtilities
     }
 }
 
+/// <summary>
+/// Represents a select option for a selectlist
+/// </summary>
 public class OrderBySelectItem
 {
     public int Value { get; set; }

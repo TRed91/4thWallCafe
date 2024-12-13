@@ -52,16 +52,16 @@ public class ReportsController : Controller
             OrderTotal = o.AmountDue
         }).ToList();
 
-        var orderBy = form?.OrderBy ?? SelectOrderBy.OrderID;
+        var orderBy = form?.OrderReportsOrderBy ?? OrderReportsOrderBy.OrderID;
         switch (orderBy)
         {
-            case SelectOrderBy.OrderID:
+            case OrderReportsOrderBy.OrderID:
                 orderReports = orderReports.OrderBy(o => o.OrderId).ToList();
                 break;
-            case SelectOrderBy.Server:
+            case OrderReportsOrderBy.Server:
                 orderReports = orderReports.OrderBy(o => o.ServerName).ToList();
                 break;
-            case SelectOrderBy.OrderTotal:
+            case OrderReportsOrderBy.OrderTotal:
                 orderReports = orderReports.OrderBy(o => o.OrderTotal).Reverse().ToList();
                 break;
         }
@@ -76,13 +76,5 @@ public class ReportsController : Controller
         };
         
         return View(model);
-    }
-
-    [HttpPost]
-    public IActionResult Order(OrderReportForm form)
-    {
-        return RedirectToAction("Orders", new {
-            form
-        });
     }
 }

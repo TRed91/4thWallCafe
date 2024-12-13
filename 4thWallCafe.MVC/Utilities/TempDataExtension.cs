@@ -22,7 +22,7 @@ public static class TempDataExtension
 }
 
 /// <summary>
-/// Takes a bool to determine wether an operation was successfull and a message
+/// Takes a bool to specify wether a message represents success or fail and the message.
 /// </summary>
 public class TempDataMessage
 {

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace _4thWallCafe.MVC.Models;
 
+/// <summary>
+/// Model is passed to view in Menu Controller
+/// </summary>
 public class MenuModel
 {
     public List<MenuItem> MenuItems { get; set; }
