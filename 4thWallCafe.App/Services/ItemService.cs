@@ -104,6 +104,19 @@ public class ItemService : IItemService
         }
     }
 
+    public Result<List<ItemReport>> GetItemReports(DateOnly startDate, DateOnly endDate)
+    {
+        try
+        {
+            var reports = _itemRepository.GetItemReports(startDate, endDate);
+            return ResultFactory.Success(reports);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<ItemReport>>(ex.Message);
+        }
+    }
+
     public Result AddItem(ItemForm itemForm)
     {
         var item = new Item

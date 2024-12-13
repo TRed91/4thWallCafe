@@ -1,4 +1,5 @@
 ﻿using _4thWallCafe.Core.Entities;
+using _4thWallCafe.Core.Models;
 
 namespace _4thWallCafe.Core.Interfaces;
 
@@ -13,6 +14,7 @@ public interface IItemRepository
     ItemPrice? GetItemPriceById(int id);
     List<Category> GetCategories();
     List<TimeOfDay> GetTimeOfDays();
+    List<ItemReport> GetItemReports(DateOnly startDate, DateOnly endDate);
     void AddItem(Item item);
     void AddItemPrice(ItemPrice itemPrice);
     void UpdateItem(Item item);

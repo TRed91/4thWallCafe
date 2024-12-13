@@ -1,5 +1,6 @@
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces;
+using _4thWallCafe.Core.Models;
 using Dapper;
 using Dapper.Transaction;
 using Microsoft.Data.SqlClient;
@@ -154,6 +155,30 @@ public class ItemRepository : IItemRepository
         using (var cn = new SqlConnection(_connectionString))
         {
             return cn.Query<TimeOfDay>("SELECT * FROM TimeOfDay;").ToList();
+        }
+    }
+
+    public List<ItemReport> GetItemReports(DateOnly startDate, DateOnly endDate)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT SUM(ExtendedPrice) AS Revenue, ItemName, CategoryName 
+                FROM OrderItem o
+                INNER JOIN ItemPrice ip ON o.ItemPriceID = ip.ItemPriceID
+                INNER JOIN Item i ON i.ItemID = ip.ItemID
+                INNER JOIN Category c ON c.CategoryID = i.CategoryID
+                INNER JOIN CafeOrder co ON o.OrderID = co.OrderID
+                WHERE OrderDate BETWEEN @startDate AND @endDate
+                GROUP BY ItemName, CategoryName 
+                ORDER BY  CategoryName; ";
+
+            var p = new
+            {
+                startDate = startDate.ToDateTime(TimeOnly.Parse("00:00:00")), 
+                endDate = endDate.ToDateTime(TimeOnly.Parse("23:59:59")),
+            };
+            
+            return cn.Query<ItemReport>(sql, p).ToList();
         }
     }
 

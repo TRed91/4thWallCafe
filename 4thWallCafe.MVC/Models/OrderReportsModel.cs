@@ -19,12 +19,12 @@ public class OrderReportsModel
 public class OrderReportForm
 {
     [DataType(DataType.Date)]
-    public DateTime FromDate { get; set; }
+    public DateTime FromDate { get; set; } = DateTime.Now;
     
     [DataType(DataType.Date)]
-    public DateTime ToDate { get; set; }
+    public DateTime ToDate { get; set; } = DateTime.Now.AddDays(1);
     
-    public OrderReportsOrderBy OrderReportsOrderBy { get; set; }
+    public OrderReportsOrderBy OrderReportsOrderBy { get; set; } = OrderReportsOrderBy.OrderID;
 }
 
 public class OrderReport

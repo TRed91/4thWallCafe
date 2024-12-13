@@ -1,11 +1,12 @@
-@model OrderReportsModel
+@model ItemReportsModel
 
 @{
-    ViewData["Title"] = "4th Wall Cafe : Revenue Reports";
+    ViewData["Title"] = "4th Wall Cafe : Item Reports";
 }
+
 <main>
 <div class="table-responsive p-3 bg-body-tertiary d-flex justify-content-between overflow-auto">
-    <form asp-controller="Reports" asp-action="Orders" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+    <form asp-controller="Reports" asp-action="Items" method="get" class="d-flex flex-wrap gap-4 align-items-center">
         @Html.AntiForgeryToken()
         <div class="d-flex gap-2 align-items-center">
             <label asp-for="Form.FromDate" class="form-label fs-5">From: </label>
@@ -16,43 +17,37 @@
             <input asp-for="Form.ToDate" class="form-control"/>
         </div>
         <div class="d-flex gap-2 align-items-center">
-            <label asp-for="Form.OrderReportsOrderBy" class="form-label fs-6">Order By: </label>
-            <select asp-for="Form.OrderReportsOrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
+            <label asp-for="Form.OrderBy" class="form-label fs-6">Order By: </label>
+            <select asp-for="Form.OrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
         </div>
         <button type="submit" class="btn btn-primary">Apply</button>
     </form>
     <ul class="nav nav-pills">
         <li class="nav-item m-2 fs-5">
-            <a asp-controller="Reports" asp-action="Orders" class="link-underline">Orders</a>
+            <a asp-controller="Reports" asp-action="Orders" class="text-decoration-none">Orders</a>
         </li>
         <li class="nav-item m-2 fs-5">
-            <a asp-controller="Reports" asp-action="Items" class="text-decoration-none">Items</a>
+            <a asp-controller="Reports" asp-action="Items" class="link-underline">Items</a>
         </li>
     </ul>
 </div>
 <div class="table-responsive d-flex flex-wrap flex-sm-nowrap mt-3">
-    <div class="card p-2 m-3 flex-shrink-1 h-25 align-self-center" style="width:300px;">
-        <p class="lead text-center">Total Revenue</p>
-        <h2 class="text-success text-center">$@Model.TotalRevenue</h2>
-    </div>
     <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
         <table class="table table-bordered table-striped">
             <thead class="thead-primary">
             <tr>
-                <th>Order ID</th>
-                <th>Server</th>
-                <th>Order Total</th>
-                <th></th>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Revenue</th>
             </tr>
             </thead>
             <tbody>
-            @foreach (var order in Model.OrderReports)
+            @foreach (var item in Model.ItemReports)
             {
                 <tr>
-                    <td>@order.OrderId</td>
-                    <td>@order.ServerName</td>
-                    <td>$@order.OrderTotal</td>
-                    <td><a href="">Details</a></td>
+                    <td>@item.ItemName</td>
+                    <td>@item.CategoryName</td>
+                    <td>$@item.Revenue</td>
                 </tr>
             }
             </tbody>

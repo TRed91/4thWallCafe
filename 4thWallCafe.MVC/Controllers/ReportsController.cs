@@ -28,14 +28,11 @@ public class ReportsController : Controller
         _logger = logger;
     }
 
-    public IActionResult Orders(OrderReportForm? form = null)
+    public IActionResult Orders(OrderReportForm form)
     {
-        var fromDate = form?.FromDate ?? DateTime.Now;
-        var toDate = form?.ToDate ?? DateTime.Now.AddDays(1);
-        
         var result = _cafeOrderService.GetCafeOrdersInTimeFrame(
-            DateOnly.FromDateTime(fromDate), 
-            DateOnly.FromDateTime(toDate));
+            DateOnly.FromDateTime(form.FromDate), 
+            DateOnly.FromDateTime(form.ToDate));
 
         if (!result.Ok)
         {
@@ -80,10 +77,43 @@ public class ReportsController : Controller
 
     public IActionResult Items(ItemReportForm form)
     {
-        var fromDate = form?.FromDate ?? DateTime.Now;
-        var toDate = form?.ToDate ?? DateTime.Now.AddDays(1);
-        var orderBy = form?.OrderBy ?? ItemReportsOrderBy.ItemName;
+        var result = _itemService.GetItemReports(
+            DateOnly.FromDateTime(form.FromDate), 
+            DateOnly.FromDateTime(form.ToDate));
 
-        return View();
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var msg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", msg);
+            return RedirectToAction("Index", "Home");
+        }
+
+        List<ItemReport> itemReports = result.Data;
+        switch (form.OrderBy)
+        {
+            case ItemReportsOrderBy.Revenue:
+                itemReports = itemReports.OrderBy(o => o.Revenue).Reverse().ToList();
+                break;
+            case ItemReportsOrderBy.ItemName:
+                itemReports = itemReports.OrderBy(o => o.ItemName).ToList();
+                break;
+            case ItemReportsOrderBy.CategoryName:
+                itemReports = itemReports.OrderBy(o => o.CategoryName).ToList();
+                break;
+        }
+        {
+            
+        }
+
+        var model = new ItemReportsModel
+        {
+            ItemReports = itemReports,
+            Form = form ?? new ItemReportForm(),
+            OrderBySelectItems = new SelectList(
+                ReportsUtilities.ItemReportSL(), "Value", "Text"),
+        };
+        
+        return View(model);
     }
 }

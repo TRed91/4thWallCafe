@@ -12,6 +12,7 @@ public interface IItemService
     Result<List<MenuItem>> GetItemsByCategoryAndTimeOfDay(int categoryId, int timeOfDayId);
     Result<List<Category>> GetCategories();
     Result<List<TimeOfDay>> GetTimeOfDays();
+    Result<List<ItemReport>> GetItemReports(DateOnly startDate, DateOnly endDate);
     Result AddItem(ItemForm itemForm);
     Result UpdateItem(int id, ItemForm itemForm);
     Result DeleteItem(int id);
