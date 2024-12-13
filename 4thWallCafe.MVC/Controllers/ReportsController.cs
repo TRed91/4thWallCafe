@@ -71,10 +71,19 @@ public class ReportsController : Controller
             OrderReports = orderReports,
             TotalRevenue = orderReports.Sum(o => o.OrderTotal),
             OrderBySelectItems = new SelectList(
-                ReportsUtilities.GetSelectList(), "Value", "Text"),
+                ReportsUtilities.OrderReportSL(), "Value", "Text"),
             Form = new OrderReportForm()
         };
         
         return View(model);
+    }
+
+    public IActionResult Items(ItemReportForm form)
+    {
+        var fromDate = form?.FromDate ?? DateTime.Now;
+        var toDate = form?.ToDate ?? DateTime.Now.AddDays(1);
+        var orderBy = form?.OrderBy ?? ItemReportsOrderBy.ItemName;
+
+        return View();
     }
 }

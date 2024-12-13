@@ -21,8 +21,13 @@ public class MenuController : Controller
         _itemService = itemService;
         _logger = logger;
     }
-    public IActionResult Index(int categoryId = 0, int timeOfDayId = 1, string searchString = "")
+    
+    public IActionResult Index(MenuModel? form = null)
     {
+        int categoryId = form?.MenuForm?.CategoryId ?? 0;
+        int timeOfDayId = form?.MenuForm?.TimeOfDayId ?? 1;
+        string searchString = form?.MenuForm?.SearchString ?? "";
+        
         var items = new List<MenuItem>();
         Result<List<MenuItem>> result;
         
@@ -78,21 +83,15 @@ public class MenuController : Controller
             MenuItems = items,
             CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName"),
             TimeOfDayList = new SelectList(timeOfDaysResult.Data, "TimeOfDayID", "TimeOfDayName"),
-            Categories = categories
+            Categories = categories,
+            MenuForm = new MenuForm
+            {
+                CategoryId = categoryId,
+                TimeOfDayId = timeOfDayId,
+                SearchString = searchString
+            }
         };
         
         return View(model);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Index(MenuModel model)
-    {
-        return RedirectToAction("Index", new
-        {
-            categoryId = model.MenuForm.CategoryId,
-            timeOfDayId = model.MenuForm.TimeOfDayId,
-            searchString = model.MenuForm.SearchString
-        });
     }
 }

@@ -6,3 +6,10 @@ public enum OrderReportsOrderBy
     Server,
     OrderTotal
 }
+
+public enum ItemReportsOrderBy
+{
+    ItemName = 1,
+    CategoryName,
+    Revenue,
+}
