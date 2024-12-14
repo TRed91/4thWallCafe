@@ -1,6 +1,7 @@
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces;
 using _4thWallCafe.Core.Interfaces.Services;
+using _4thWallCafe.Core.Models;
 using _4thWallCafe.Core.Utilities;
 
 namespace _4thWallCafe.App.Services;
@@ -41,21 +42,23 @@ public class CafeOrderService : ICafeOrderService
         }
     }
 
-    public Result<CafeOrder> GetCafeOrder(int orderId)
+    public Result<OrderDetails> GetCafeOrder(int orderId)
     {
         try
         {
             var order = _cafeOrderRepository.GetCafeOrder(orderId);
             if (order == null)
             {
-                return ResultFactory.Fail<CafeOrder>("Order not found");
+                return ResultFactory.Fail<OrderDetails>("Order not found");
             }
+            
+            var orderDetail = new OrderDetails(order);
 
-            return ResultFactory.Success(order);
+            return ResultFactory.Success(orderDetail);
         }
         catch (Exception ex)
         {
-            return ResultFactory.Fail<CafeOrder>(ex.Message);
+            return ResultFactory.Fail<OrderDetails>(ex.Message);
         }
     }
 

@@ -1,0 +1,46 @@
+@model OrderDetails
+
+@{
+    ViewData["Title"] = $"Details: Order {Model.OrderID}";
+}
+
+<section class="d-flex flex-column gap-5 flex-md-row w-100 justify-content-between">
+<div class="w-75">
+    <h2 class="display-5">Order Details</h2>
+    <span class="ms-3">Order ID : @Model.OrderID</span>
+    <ul class="list-group mt-3">
+        <li class="list-group-item">Server: @Model.ServerName</li>
+        <li class="list-group-item">Order Date: @Model.OrderDate</li>
+        <li class="list-group-item">Payment Type: @Model.PaymentTypeName</li>
+    </ul>
+    <ul class="list-group mt-3">
+        <li class="list-group-item">Subtotal: $@Model.SubTotal</li>
+        <li class="list-group-item">Tax: $@Model.Tax</li>
+        <li class="list-group-item">Tip: $@Model.Tip</li>
+    </ul>
+    <div class="card mt-3 mb-3 p-4">
+        <p>Amount Due</p>
+        <h3 class="display-6 text-success-emphasis">$@Model.AmountDue</h3>
+    </div>
+    <a href="javascript:history.go(-1)">Go Back</a>
+</div>
+    <table class="table table-bordered table-striped mt-3">
+        <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>#</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

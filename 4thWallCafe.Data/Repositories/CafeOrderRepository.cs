@@ -71,26 +71,32 @@ public class CafeOrderRepository : ICafeOrderRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql = @"SELECT * FROM CafeOrder WHERE OrderID = @orderId;
-                        SELECT * FROM [Server] WHERE ServerID = @serverId;
+            var sql1 = "SELECT * FROM CafeOrder WHERE OrderID = @orderId;";
+            var sql2 = @"SELECT * FROM [Server] WHERE ServerID = @serverId;
                         SELECT * FROM PaymentType WHERE PaymentTypeID = @paymentTypeId;";
 
-            var sql2 = @"SELECT * FROM OrderItem oi
+            var sql3 = @"SELECT * FROM OrderItem oi
                         INNER JOIN ItemPrice ip ON ip.ItemPriceID = oi.ItemPriceID
                         INNER JOIN Item i ON i.ItemID = ip.ItemID
                         INNER JOIN Category c ON c.CategoryID = i.CategoryID
                         WHERE OrderID = @orderId;";
 
-            var order = new CafeOrder();
-            using (var multi = cn.QueryMultiple(sql, new { orderId }))
+            var order = cn.QueryFirstOrDefault<CafeOrder>(sql1, new { orderId });
+            if (order == null) return null;
+            var p = new
             {
-                order = multi.ReadFirst<CafeOrder>();
+                serverId = order.ServerID,
+                paymentTypeId = order.PaymentTypeID
+            };
+            using (var multi = cn.QueryMultiple(sql2, p))
+            {
                 order.Server = multi.ReadFirst<Server>();
                 order.PaymentType = multi.ReadFirst<PaymentType>();
                 order.OrderItems = new List<OrderItem>();
             }
-            var cmd = new SqlCommand(sql2, cn);
-
+            var cmd = new SqlCommand(sql3, cn);
+            cmd.Parameters.AddWithValue("@orderId", orderId);
+            cn.Open();
             using (var dr = cmd.ExecuteReader())
             {
                 while (dr.Read())
@@ -107,8 +113,8 @@ public class CafeOrderRepository : ICafeOrderRepository
                         ItemID = (int)dr["ItemID"],
                         TimeOfDayID = (int)dr["TimeOfDayID"],
                         Price = (decimal)dr["Price"],
-                        StartDate = (DateOnly)dr["StartDate"],
-                        EndDate = (DateOnly)dr["EndDate"],
+                        StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]),
+                        EndDate = dr["EndDate"] == DBNull.Value ? null : DateOnly.FromDateTime((DateTime)dr["EndDate"]),
                         Item = new Item
                         {
                             ItemID = (int)dr["ItemID"],

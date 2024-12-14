@@ -20,8 +20,29 @@ public class ItemRepository : IItemRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql = "SELECT * FROM Item";
-            return cn.Query<Item>(sql).ToList();
+            var sql = @"SELECT * 
+                        FROM Item i INNER JOIN Category c ON i.CategoryID = c.CategoryID
+                        ORDER BY CategoryID";
+            
+            var cmd = new SqlCommand(sql, cn);
+            cn.Open();
+            using (var dr = cmd.ExecuteReader())
+            {
+                var items = new List<Item>();
+                while (dr.Read())
+                {
+                    var item = new Item();
+                    item.ItemID = (int)dr["ItemID"];
+                    item.CategoryID = (int)dr["CategoryID"];
+                    item.ItemDescription = (string)dr["ItemDescription"];
+                    item.ItemName = (string)dr["ItemName"];
+                    item.Category = new Category();
+                    item.Category.CategoryID = (int)dr["CategoryID"];
+                    item.Category.CategoryName = (string)dr["CategoryName"];
+                    items.Add(item);
+                }
+                return items;
+            }
         }
     }
 

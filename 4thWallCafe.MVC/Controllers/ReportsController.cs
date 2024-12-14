@@ -12,18 +12,15 @@ namespace _4thWallCafe.MVC.Controllers;
 public class ReportsController : Controller
 {
     private readonly ICafeOrderService _cafeOrderService;
-    private readonly IServerService _serverService;
     private readonly IItemService _itemService;
     private readonly ILogger _logger;
 
     public ReportsController(
-        ICafeOrderService cafeOrderService, 
-        IServerService serverService, 
+        ICafeOrderService cafeOrderService,  
         IItemService itemService,
         ILogger<ReportsController> logger)
     {
         _cafeOrderService = cafeOrderService;
-        _serverService = serverService;
         _itemService = itemService;
         _logger = logger;
     }
@@ -115,5 +112,19 @@ public class ReportsController : Controller
         };
         
         return View(model);
+    }
+
+    public IActionResult OrderDetail(int id)
+    {
+        var result = _cafeOrderService.GetCafeOrder(id);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var msg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", msg);
+            return RedirectToAction("Orders");
+        }
+        
+        return View(result.Data);
     }
 }

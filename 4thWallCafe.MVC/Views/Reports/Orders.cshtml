@@ -52,7 +52,11 @@
                     <td>@order.OrderId</td>
                     <td>@order.ServerName</td>
                     <td>$@order.OrderTotal</td>
-                    <td><a href="">Details</a></td>
+                    <td>
+                        <a asp-controller="Reports" asp-action="OrderDetail" asp-route-id="@order.OrderId">
+                            Details
+                        </a>
+                    </td>
                 </tr>
             }
             </tbody>

@@ -57,8 +57,8 @@ public class ServerService : IServerService
         {
             FirstName = serverForm.FirstName,
             LastName = serverForm.LastName,
-            DoB = DateOnly.FromDateTime(serverForm.DoB),
-            HireDate = DateOnly.FromDateTime(DateTime.Today),
+            DoB = serverForm.DoB,
+            HireDate = DateTime.Today,
         };
         try
         {
@@ -86,7 +86,7 @@ public class ServerService : IServerService
             }
             server.FirstName = serverForm.FirstName;
             server.LastName = serverForm.LastName;
-            server.DoB = DateOnly.FromDateTime(serverForm.DoB);
+            server.DoB = serverForm.DoB;
             
             _serverRepository.UpdateServer(server);
             return ResultFactory.Success();
