@@ -35,32 +35,39 @@
         <p class="lead text-center">Total Revenue</p>
         <h2 class="text-success text-center">$@Model.TotalRevenue</h2>
     </div>
-    <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-primary">
-            <tr>
-                <th>Order ID</th>
-                <th>Server</th>
-                <th>Order Total</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var order in Model.OrderReports)
-            {
+    @if (Model.OrderReports.Count == 0)
+    {
+        <h3 class="display-6 text-center">No orders found</h3>
+    }
+    else
+    {
+        <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-primary">
                 <tr>
-                    <td>@order.OrderId</td>
-                    <td>@order.ServerName</td>
-                    <td>$@order.OrderTotal</td>
-                    <td>
-                        <a asp-controller="Reports" asp-action="OrderDetail" asp-route-id="@order.OrderId">
-                            Details
-                        </a>
-                    </td>
+                    <th>Order ID</th>
+                    <th>Server</th>
+                    <th>Order Total</th>
+                    <th></th>
                 </tr>
-            }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                @foreach (var order in Model.OrderReports)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>@order.ServerName</td>
+                        <td>$@order.OrderTotal</td>
+                        <td>
+                            <a asp-controller="Reports" asp-action="OrderDetail" asp-route-id="@order.OrderId">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>   
+    }
 </div>
 </main>

@@ -65,7 +65,7 @@ public class ReportsController : Controller
             OrderReports = orderReports,
             TotalRevenue = orderReports.Sum(o => o.OrderTotal),
             OrderBySelectItems = new SelectList(
-                ReportsUtilities.OrderReportSL(), "Value", "Text"),
+                SelectlistFactory.OrderReportSL(), "Value", "Text"),
             Form = new OrderReportForm()
         };
         
@@ -108,7 +108,7 @@ public class ReportsController : Controller
             ItemReports = itemReports,
             Form = form ?? new ItemReportForm(),
             OrderBySelectItems = new SelectList(
-                ReportsUtilities.ItemReportSL(), "Value", "Text"),
+                SelectlistFactory.ItemReportSL(), "Value", "Text"),
         };
         
         return View(model);

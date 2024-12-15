@@ -1,6 +1,6 @@
 ﻿namespace _4thWallCafe.MVC.Utilities;
 
-public static class ReportsUtilities
+public static class SelectlistFactory
 {
     /// <summary>
     /// Generates a SelectList for Order Reports View
@@ -27,6 +27,15 @@ public static class ReportsUtilities
             new OrderBySelectItem { Text = "Item", Value = 1 },
             new OrderBySelectItem { Text = "Category", Value = 2 },
             new OrderBySelectItem { Text = "Revenue", Value = 3 },
+        };
+    }
+
+    public static List<OrderBySelectItem> ItemManageSL()
+    {
+        return new List<OrderBySelectItem>
+        {
+            new OrderBySelectItem { Text = "Item", Value = 1 },
+            new OrderBySelectItem { Text = "Category", Value = 2 },
         };
     }
 }

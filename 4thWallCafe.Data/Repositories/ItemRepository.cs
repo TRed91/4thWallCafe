@@ -22,7 +22,7 @@ public class ItemRepository : IItemRepository
         {
             var sql = @"SELECT * 
                         FROM Item i INNER JOIN Category c ON i.CategoryID = c.CategoryID
-                        ORDER BY CategoryID";
+                        ORDER BY c.CategoryID";
             
             var cmd = new SqlCommand(sql, cn);
             cn.Open();
@@ -79,7 +79,7 @@ public class ItemRepository : IItemRepository
                     var item = new ItemPrice();
                     item.ItemID = (int)dr["ItemID"];
                     item.Price = (decimal)dr["Price"];
-                    item.StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]);
+                    item.StartDate = (DateTime)dr["StartDate"];
                     item.TimeOfDayID = (int)dr["TimeOfDayID"];
                     item.Item = new Item();
                     item.Item.CategoryID = (int)dr["CategoryID"];
@@ -120,7 +120,7 @@ public class ItemRepository : IItemRepository
                     var item = new ItemPrice();
                     item.ItemID = (int)dr["ItemID"];
                     item.Price = (decimal)dr["Price"];
-                    item.StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]);
+                    item.StartDate = (DateTime)dr["StartDate"];
                     item.TimeOfDayID = (int)dr["TimeOfDayID"];
                     item.Item = new Item();
                     item.Item.CategoryID = (int)dr["CategoryID"];
@@ -140,16 +140,13 @@ public class ItemRepository : IItemRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql = @"SELECT * FROM Item WHERE ItemID = @id;
-                        SELECT * FROM ItemPrice WHERE ItemID = @id;";
-
-            using (var multi = cn.QueryMultiple(sql, new { id }))
-            {
-                var item = multi.ReadFirst<Item>();
-                item.ItemPrices = multi.Read<ItemPrice>().AsList();
-                
-                return item;
-            }
+            var sql = @"SELECT * FROM Item WHERE ItemID = @id;";
+            var sql2 = @"SELECT * FROM ItemPrice WHERE ItemID = @id AND EndDate IS NULL;";
+            
+            var item = cn.Query<Item>(sql, new { id }).FirstOrDefault();
+            if (item == null) return null;
+            item.ItemPrices = cn.Query<ItemPrice>(sql2, new { id }).ToList();
+            return item;
         }
     }
 
@@ -208,11 +205,10 @@ public class ItemRepository : IItemRepository
         using (var cn = new SqlConnection(_connectionString))
         {
             var sql = @"INSERT INTO Item 
-                VALUES (@ItemID, @CategoryID, @ItemName, @ItemDescription)
+                VALUES (@CategoryID, @ItemName, @ItemDescription)
                 SELECT SCOPE_IDENTITY()";
             var p = new
             {
-                item.ItemID,
                 item.CategoryID,
                 item.ItemName,
                 item.ItemDescription
@@ -234,7 +230,7 @@ public class ItemRepository : IItemRepository
                 itemPrice.TimeOfDayID,
                 itemPrice.Price,
                 itemPrice.StartDate,
-                itemPrice.EndDate
+                EndDate = (DateTime?)null
             };
             itemPrice.ItemPriceID = cn.ExecuteScalar<int>(sql, p);
         }

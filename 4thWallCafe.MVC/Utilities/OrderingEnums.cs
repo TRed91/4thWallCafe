@@ -13,3 +13,9 @@ public enum ItemReportsOrderBy
     CategoryName,
     Revenue,
 }
+
+public enum ItemManageOrderBy
+{
+    ItemName = 1,
+    CategoryName,
+}

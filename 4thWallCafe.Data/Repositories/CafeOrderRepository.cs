@@ -113,8 +113,8 @@ public class CafeOrderRepository : ICafeOrderRepository
                         ItemID = (int)dr["ItemID"],
                         TimeOfDayID = (int)dr["TimeOfDayID"],
                         Price = (decimal)dr["Price"],
-                        StartDate = DateOnly.FromDateTime((DateTime)dr["StartDate"]),
-                        EndDate = dr["EndDate"] == DBNull.Value ? null : DateOnly.FromDateTime((DateTime)dr["EndDate"]),
+                        StartDate = (DateTime)dr["StartDate"],
+                        EndDate = dr["EndDate"] == DBNull.Value ? null : (DateTime)dr["EndDate"],
                         Item = new Item
                         {
                             ItemID = (int)dr["ItemID"],

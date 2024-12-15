@@ -117,23 +117,40 @@ public class ItemService : IItemService
         }
     }
 
-    public Result AddItem(ItemForm itemForm)
+    public Result<Item> GetItemById(int id)
+    {
+        try
+        {
+            var item = _itemRepository.GetItemById(id);
+            if (item == null)
+            {
+                return ResultFactory.Fail<Item>("Item not found");
+            }
+            return ResultFactory.Success(item);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<Item>(ex.Message);
+        }
+    }
+
+    public Result AddItem(AddItem addItem)
     {
         var item = new Item
         {
-            ItemName = itemForm.ItemName,
-            ItemDescription = itemForm.ItemDescription,
-            CategoryID = itemForm.CategoryId,
+            ItemName = addItem.ItemName,
+            ItemDescription = addItem.ItemDescription,
+            CategoryID = addItem.CategoryId,
         };
         try
         {
             _itemRepository.AddItem(item);
-            var itemPrices = itemForm.PriceFields.Select(p => new ItemPrice
+            var itemPrices = addItem.PriceFields.Select(p => new ItemPrice
             {
                 ItemID = item.ItemID,
                 Price = p.Price,
                 TimeOfDayID = p.TimeOfDayId,
-                StartDate = DateOnly.FromDateTime(DateTime.Today),
+                StartDate = DateTime.Today,
             }).ToList();
             foreach (var price in itemPrices)
             {
@@ -147,7 +164,7 @@ public class ItemService : IItemService
         }
     }
 
-    public Result UpdateItem(int id, ItemForm itemForm)
+    public Result UpdateItem(int id, AddItem addItem)
     {
         try
         {
@@ -156,13 +173,13 @@ public class ItemService : IItemService
             {
                 return ResultFactory.Fail("Item not found");
             }
-            item.ItemName = itemForm.ItemName;
-            item.ItemDescription = itemForm.ItemDescription;
-            item.CategoryID = itemForm.CategoryId;
+            item.ItemName = addItem.ItemName;
+            item.ItemDescription = addItem.ItemDescription;
+            item.CategoryID = addItem.CategoryId;
             _itemRepository.UpdateItem(item);
             foreach (var price in item.ItemPrices)
             {
-                price.Price = itemForm.PriceFields
+                price.Price = addItem.PriceFields
                     .Where(p => p.TimeOfDayId == price.TimeOfDayID)
                     .Select(p => p.Price)
                     .First();

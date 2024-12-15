@@ -1,0 +1,66 @@
+﻿@model ItemManageModel
+
+@{
+    ViewData["title"] = "4th Wall Cafe : Manage Items";
+}
+
+<main>
+    <div class="table-responsive p-3 bg-body-tertiary d-flex justify-content-between overflow-auto">
+        <form asp-controller="Managing" asp-action="Items" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+            @Html.AntiForgeryToken()
+            <div class="d-flex gap-2 align-items-center">
+                <label asp-for="Form.OrderBy" class="form-label fs-6">Order By: </label>
+                <select asp-for="Form.OrderBy" asp-items="@Model.OrderBySelectItems" class="form-select"></select>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+                <input asp-for="Form.SearchString" class="form-control" placeholder="search" type="search"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+        <ul class="nav nav-pills">
+            <li class="nav-item m-2 fs-5">
+                <a asp-controller="Managing" asp-action="Items" class="link-underline">Items</a>
+            </li>
+            <li class="nav-item m-2 fs-5">
+                <a asp-controller="Reports" asp-action="Items" class="text-decoration-none">Servers</a>
+            </li>
+        </ul>
+    </div>
+    <div class="table-responsive mt-3">
+        <a class="btn btn-primary text-decoration-none ms-5 mb-3" asp-controller="Managing" asp-action="AddItem">Add Item</a>
+        @if (Model.Items.Count == 0)
+        {
+            <h3 class="display-6 text-center">No items found</h3>
+        }
+        else
+        {
+            <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-primary">
+                    <tr>
+                        <th>Item</th>
+                        <th>Category</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.ItemName</td>
+                            <td>@item.Category.CategoryName</td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <a asp-controller="Managing" asp-action="EditItem" asp-route-id="@item.ItemID">Edit</a>
+                                    <span>|</span>
+                                    <a asp-controller="Managing" asp-action="DeleteItem" asp-route-id="@item.ItemID" class="text-danger">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>   
+        }
+    </div>
+</main>

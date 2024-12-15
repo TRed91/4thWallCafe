@@ -13,7 +13,8 @@ public interface IItemService
     Result<List<Category>> GetCategories();
     Result<List<TimeOfDay>> GetTimeOfDays();
     Result<List<ItemReport>> GetItemReports(DateOnly startDate, DateOnly endDate);
-    Result AddItem(ItemForm itemForm);
-    Result UpdateItem(int id, ItemForm itemForm);
+    Result<Item> GetItemById(int id);
+    Result AddItem(AddItem addItem);
+    Result UpdateItem(int id, AddItem addItem);
     Result DeleteItem(int id);
 }

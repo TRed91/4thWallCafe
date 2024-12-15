@@ -32,26 +32,33 @@
     </ul>
 </div>
 <div class="table-responsive d-flex flex-wrap flex-sm-nowrap mt-3">
-    <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-primary">
-            <tr>
-                <th>Item</th>
-                <th>Category</th>
-                <th>Revenue</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.ItemReports)
-            {
+    @if (Model.ItemReports.Count == 0)
+    {
+        <h3 class="display-6 text-center">No items found</h3>
+    }
+    else
+    {
+        <div class="p-2 w-100 overflow-auto" style="max-height: 65vh;">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-primary">
                 <tr>
-                    <td>@item.ItemName</td>
-                    <td>@item.CategoryName</td>
-                    <td>$@item.Revenue</td>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Revenue</th>
                 </tr>
-            }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ItemReports)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.CategoryName</td>
+                        <td>$@item.Revenue</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>   
+    }
 </div>
 </main>

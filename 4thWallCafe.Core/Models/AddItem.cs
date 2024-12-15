@@ -1,15 +1,15 @@
 namespace _4thWallCafe.Core.Models;
 
-public class ItemForm
+public class AddItem
 {
     public string ItemName { get; set; }
     public string ItemDescription { get; set; }
     public int CategoryId { get; set; }
     
-    public List<PriceForm> PriceFields { get; set; }
+    public List<PriceField> PriceFields { get; set; }
 }
 
-public class PriceForm
+public class PriceField
 {
     public int TimeOfDayId { get; set; }
     public decimal Price { get; set; }

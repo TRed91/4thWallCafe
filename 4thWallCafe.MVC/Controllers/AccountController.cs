@@ -1,5 +1,6 @@
 using _4thWallCafe.Core.Models;
 using _4thWallCafe.MVC.db.IdentityModels;
+using _4thWallCafe.MVC.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,12 +66,22 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-            if (result.Succeeded)
+            try
             {
-                return RedirectToAction("Index", "Home");
+                var result =
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt");
             }
-            ModelState.AddModelError(string.Empty, "Invalid login attempt");
+            catch (Exception ex)
+            {
+                var msg = new TempDataMessage(false, ex.Message);
+                TempDataExtension.Put(TempData, "message", msg);
+            }
         }
         return View(model);
     }
