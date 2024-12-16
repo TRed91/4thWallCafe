@@ -58,7 +58,7 @@ public class ServerService : IServerService
             FirstName = serverForm.FirstName,
             LastName = serverForm.LastName,
             DoB = serverForm.DoB,
-            HireDate = DateTime.Today,
+            HireDate = DateTime.Now,
         };
         try
         {
@@ -87,6 +87,7 @@ public class ServerService : IServerService
             server.FirstName = serverForm.FirstName;
             server.LastName = serverForm.LastName;
             server.DoB = serverForm.DoB;
+            server.TermDate = null;
             
             _serverRepository.UpdateServer(server);
             return ResultFactory.Success();
@@ -101,7 +102,13 @@ public class ServerService : IServerService
     {
         try
         {
-            _serverRepository.TerminateServer(id);
+            var server = _serverRepository.GetServerById(id);
+            if (server == null)
+            {
+                return ResultFactory.Fail<Server>("Server not found");
+            }
+            server.TermDate = DateTime.Now;
+            _serverRepository.UpdateServer(server);
             return ResultFactory.Success();
         }
         catch (Exception ex)

@@ -30,12 +30,29 @@ public static class SelectlistFactory
         };
     }
 
+    /// <summary>
+    /// Generates a SelectList for Item Management View
+    /// </summary>
+    /// <returns>List of OrderBy Select Options</returns>
     public static List<OrderBySelectItem> ItemManageSL()
     {
         return new List<OrderBySelectItem>
         {
             new OrderBySelectItem { Text = "Item", Value = 1 },
             new OrderBySelectItem { Text = "Category", Value = 2 },
+        };
+    }
+
+    /// <summary>
+    /// Generates a SelectList for Server Management View
+    /// </summary>
+    /// <returns>List of OrderBy Select Options</returns>
+    public static List<OrderBySelectItem> ServerManageSL()
+    {
+        return new List<OrderBySelectItem>
+        {
+            new OrderBySelectItem { Text = "Name", Value = 1 },
+            new OrderBySelectItem { Text = "Hire Date", Value = 2 },
         };
     }
 }

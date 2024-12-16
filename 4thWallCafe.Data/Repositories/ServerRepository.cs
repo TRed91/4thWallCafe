@@ -18,7 +18,7 @@ public class ServerRepository : IServerRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var sql = "SELECT * FROM [Server]";
+            var sql = "SELECT * FROM [Server] Where TermDate IS NULL";
             return cn.Query<Server>(sql).ToList();
         }
     }
@@ -45,7 +45,7 @@ public class ServerRepository : IServerRepository
                 server.FirstName,
                 server.LastName,
                 server.HireDate,
-                server.TermDate,
+                TermDate = (DateTime?)null,
                 server.DoB
             };
             
@@ -71,23 +71,6 @@ public class ServerRepository : IServerRepository
                 server.DoB,
                 server.ServerID
             };
-            cn.Execute(sql, p);
-        }
-    }
-
-    public void TerminateServer(int id)
-    {
-        using (var cn = new SqlConnection(_connectionString))
-        {
-            var sql = @"UPDATE [Server] SET 
-                    TermDate = @TermDate 
-                WHERE ServerID = @id;";
-            var p = new
-            {
-                id,
-                TermDate = DateOnly.FromDateTime(DateTime.Now)
-            };
-            
             cn.Execute(sql, p);
         }
     }

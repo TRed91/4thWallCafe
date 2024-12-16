@@ -8,5 +8,4 @@ public interface IServerRepository
     Server? GetServerById(int id);
     void AddServer(Server server);
     void UpdateServer(Server server);
-    void TerminateServer(int id);
 }

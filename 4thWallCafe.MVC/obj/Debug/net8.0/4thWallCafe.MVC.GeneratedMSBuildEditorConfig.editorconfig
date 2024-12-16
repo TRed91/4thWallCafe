@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcQWRkSXRlbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/AddServer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcQWRkU2VydmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/DeleteItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcRGVsZXRlSXRlbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -46,8 +50,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcRWRpdEl0ZW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/EditServer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcRWRpdFNlcnZlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/Items.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcSXRlbXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/Servers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcU2VydmVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Managing/TerminateServer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdpbmdcVGVybWluYXRlU2VydmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/thoma/source/repos/CS400/4thWallCafe/4thWallCafe.MVC/Views/Menu/Index.cshtml]

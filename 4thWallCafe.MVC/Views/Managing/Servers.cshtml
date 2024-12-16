@@ -1,12 +1,12 @@
-﻿@model ItemManageModel
+﻿@model ServerManageModel
 
 @{
-    ViewData["title"] = "4th Wall Cafe : Manage Items";
+    ViewBag.Title = "4th Wall Cafe : Manage Servers";
 }
 
 <main>
     <div class="table-responsive p-3 bg-body-tertiary d-flex justify-content-between overflow-auto">
-        <form asp-controller="Managing" asp-action="Items" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+        <form asp-controller="Managing" asp-action="Servers" method="get" class="d-flex flex-wrap gap-4 align-items-center">
             @Html.AntiForgeryToken()
             <div class="d-flex gap-2 align-items-center">
                 <label asp-for="Form.OrderBy" class="form-label fs-6">Order By: </label>
@@ -19,18 +19,18 @@
         </form>
         <ul class="nav nav-pills">
             <li class="nav-item m-2 fs-5">
-                <a asp-controller="Managing" asp-action="Items" class="link-underline">Items</a>
+                <a asp-controller="Managing" asp-action="Items" class="text-decoration-none">Items</a>
             </li>
             <li class="nav-item m-2 fs-5">
-                <a asp-controller="Managing" asp-action="Servers" class="text-decoration-none">Servers</a>
+                <a asp-controller="Managing" asp-action="Servers" class="link-underline">Servers</a>
             </li>
         </ul>
     </div>
     <div class="table-responsive mt-3">
-        <a class="btn btn-primary text-decoration-none ms-5 mb-3" asp-controller="Managing" asp-action="AddItem">Add Item</a>
-        @if (Model.Items.Count == 0)
+        <a class="btn btn-primary text-decoration-none ms-5 mb-3" asp-controller="Managing" asp-action="AddServer">New Server</a>
+        @if (Model.Servers.Count == 0)
         {
-            <h3 class="display-6 text-center">No items found</h3>
+            <h3 class="display-6 text-center">No servers found</h3>
         }
         else
         {
@@ -38,22 +38,22 @@
                 <table class="table table-bordered table-striped">
                     <thead class="thead-primary">
                     <tr>
-                        <th>Item</th>
-                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Hire Date</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.Items)
+                    @foreach (var server in Model.Servers)
                     {
                         <tr>
-                            <td>@item.ItemName</td>
-                            <td>@item.Category.CategoryName</td>
+                            <td>@server.LastName, @server.FirstName</td>
+                            <td>@DateOnly.FromDateTime(server.HireDate)</td>
                             <td>
                                 <div class="d-flex align-items-center justify-content-around">
-                                    <a asp-controller="Managing" asp-action="EditItem" asp-route-id="@item.ItemID">Edit</a>
+                                    <a asp-controller="Managing" asp-action="EditServer" asp-route-id="@server.ServerID">Edit</a>
                                     <span>|</span>
-                                    <a asp-controller="Managing" asp-action="DeleteItem" asp-route-id="@item.ItemID" class="text-danger">Delete</a>
+                                    <a asp-controller="Managing" asp-action="TerminateServer" asp-route-id="@server.ServerID" class="text-danger">Terminate</a>
                                 </div>
                             </td>
                         </tr>

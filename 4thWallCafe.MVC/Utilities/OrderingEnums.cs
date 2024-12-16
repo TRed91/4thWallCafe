@@ -19,3 +19,9 @@ public enum ItemManageOrderBy
     ItemName = 1,
     CategoryName,
 }
+
+public enum ServerManageOrderBy
+{
+    ServerName = 1,
+    HireDate,
+}

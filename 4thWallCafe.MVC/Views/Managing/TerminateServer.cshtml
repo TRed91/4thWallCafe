@@ -1,0 +1,14 @@
+﻿@model _4thWallCafe.Core.Entities.Server
+@{
+    ViewData["title"] = "4th Wall Cafe : Terminate Server";
+}
+
+<h2 class="display-6 text-danger">Terminate Server @Model.LastName, @Model.FirstName</h2>
+<p class="lead">Are you sure you want to terminate this Server?</p>
+
+<div class="d-flex gap-5 align-items-center">
+    <form asp-controller="Managing" asp-action="TerminateServerPost" method="post" asp-route-id="@Model.ServerID">
+        <button class="btn btn-danger">Terminate</button>
+    </form>
+    <a href="javascript:history.go(-1)">Go Back</a>
+</div>

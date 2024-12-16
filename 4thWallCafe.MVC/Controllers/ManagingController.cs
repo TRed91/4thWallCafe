@@ -90,6 +90,7 @@ public class ManagingController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult AddItem(AddItemModel model)
     {
         
@@ -326,5 +327,152 @@ public class ManagingController : Controller
         var msg = new TempDataMessage(true, "Item deleted: " + id);
         TempDataExtension.Put(TempData, "message", msg);
         return RedirectToAction("Items");
+    }
+
+    public IActionResult Servers(ServerManageForm form)
+    {
+        var result = _serverService.GetServers();
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+        }
+        var servers = result.Data;
+        switch (form.OrderBy)
+        {
+            case ServerManageOrderBy.ServerName:
+                servers = servers.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                break;
+            case ServerManageOrderBy.HireDate:
+                servers = servers.OrderBy(s => s.HireDate).Reverse().ToList();
+                break;
+        }
+
+        if (!String.IsNullOrEmpty(form.SearchString))
+        {
+            string search = form.SearchString.ToLower().Trim();
+            servers = servers
+                .Where(s => s.LastName.ToLower().Contains(search) || 
+                            s.FirstName.ToLower().Contains(search))
+                .ToList();
+        }
+
+        var model = new ServerManageModel
+        {
+            Form = form,
+            Servers = servers,
+            OrderBySelectItems = new SelectList(SelectlistFactory.ServerManageSL(), "Value", "Text")
+        };
+        return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult AddServer()
+    {
+        var form = new ServerForm();
+        form.DoB = DateTime.Today;
+        return View(form);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult AddServer(ServerForm form)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(form);
+        }
+        var result = _serverService.AddServer(form);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+            return RedirectToAction("Servers");
+        }
+        
+        _logger.LogInformation($"Server added: {form.LastName}, {form.FirstName}");
+        var msg = new TempDataMessage(true, $"Server added: {form.LastName}, {form.FirstName}");
+        TempDataExtension.Put(TempData, "message", msg);
+        return RedirectToAction("Servers");
+    }
+
+    [HttpGet]
+    public IActionResult EditServer(int id)
+    {
+        var result = _serverService.GetServerById(id);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+            return RedirectToAction("Servers");
+        }
+
+        var form = new ServerForm
+        {
+            LastName = result.Data.LastName,
+            FirstName = result.Data.FirstName,
+            DoB = result.Data.DoB,
+        };
+        
+        return View(form);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditServer(int id, ServerForm form)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(form);
+        }
+        var result = _serverService.UpdateServer(id, form);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+            return RedirectToAction("Servers");
+        }
+        
+        _logger.LogInformation($"Server updated: {form.LastName}, {form.FirstName}");
+        var msg = new TempDataMessage(true, $"Server updated: {form.LastName}, {form.FirstName}");
+        TempDataExtension.Put(TempData, "message", msg);
+        return RedirectToAction("Servers");
+    }
+
+    [HttpGet]
+    public IActionResult TerminateServer(int id)
+    {
+        var result = _serverService.GetServerById(id);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+            return RedirectToAction("Servers");
+        }
+        return View(result.Data);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult TerminateServerPost(int id)
+    {
+        var result = _serverService.TerminateServer(id);
+        if (!result.Ok)
+        {
+            _logger.LogError(result.Message);
+            var errMsg = new TempDataMessage(false, result.Message);
+            TempDataExtension.Put(TempData, "message", errMsg);
+            return RedirectToAction("Servers");
+        }
+        
+        _logger.LogInformation($"Server terminated: {id}");
+        var msg = new TempDataMessage(true, $"Server terminated: {id}");
+        TempDataExtension.Put(TempData, "message", msg);
+        return RedirectToAction("Servers");
     }
 }
