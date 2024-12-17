@@ -64,8 +64,7 @@ public class ReportsController : Controller
         {
             OrderReports = orderReports,
             TotalRevenue = orderReports.Sum(o => o.OrderTotal),
-            OrderBySelectItems = new SelectList(
-                SelectlistFactory.OrderReportSL(), "Value", "Text"),
+            OrderBySelectItems = SelectlistFactory.OrderReportSL(),
             Form = new OrderReportForm()
         };
         
@@ -99,16 +98,12 @@ public class ReportsController : Controller
                 itemReports = itemReports.OrderBy(o => o.CategoryName).ToList();
                 break;
         }
-        {
-            
-        }
 
         var model = new ItemReportsModel
         {
             ItemReports = itemReports,
             Form = form ?? new ItemReportForm(),
-            OrderBySelectItems = new SelectList(
-                SelectlistFactory.ItemReportSL(), "Value", "Text"),
+            OrderBySelectItems = SelectlistFactory.ItemReportSL(),
         };
         
         return View(model);

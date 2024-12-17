@@ -81,7 +81,7 @@ public class MenuController : Controller
         var model = new MenuModel
         {
             MenuItems = items,
-            CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName"),
+            CategoryList = SelectlistFactory.CategorySL(categories),
             TimeOfDayList = new SelectList(timeOfDaysResult.Data, "TimeOfDayID", "TimeOfDayName"),
             Categories = categories,
             MenuForm = new MenuForm

@@ -63,7 +63,7 @@ public class ManagingController : Controller
         {
             Items = items,
             Form = form,
-            OrderBySelectItems = new SelectList(SelectlistFactory.ItemManageSL(), "Value", "Text")
+            OrderBySelectItems = SelectlistFactory.ItemManageSL()
         };
         
         return View(model);
@@ -83,7 +83,7 @@ public class ManagingController : Controller
         var model = new AddItemModel
         {
             Form = new ItemForm(),
-            CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName"),
+            CategoryList = SelectlistFactory.CategorySL(categoriesResult.Data),
         };
         
         return View(model);
@@ -104,7 +104,7 @@ public class ManagingController : Controller
                 TempDataExtension.Put(TempData, "message", errMsg);
                 return RedirectToAction("Items");
             }
-            model.CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName");
+            model.CategoryList = SelectlistFactory.CategorySL(categoriesResult.Data);
             return View(model);
         }
         
@@ -208,7 +208,7 @@ public class ManagingController : Controller
         var model = new AddItemModel
         {
             Form = form,
-            CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName"),
+            CategoryList = SelectlistFactory.CategorySL(categoriesResult.Data),
         };
         
         return View(model);
@@ -228,7 +228,7 @@ public class ManagingController : Controller
                 TempDataExtension.Put(TempData, "message", errMsg);
                 return RedirectToAction("Items");
             }
-            model.CategoryList = new SelectList(categoriesResult.Data, "CategoryID", "CategoryName");
+            model.CategoryList = SelectlistFactory.CategorySL(categoriesResult.Data);
             return View(model);
         }
         
@@ -362,7 +362,7 @@ public class ManagingController : Controller
         {
             Form = form,
             Servers = servers,
-            OrderBySelectItems = new SelectList(SelectlistFactory.ServerManageSL(), "Value", "Text")
+            OrderBySelectItems = SelectlistFactory.ServerManageSL()
         };
         return View(model);
     }
