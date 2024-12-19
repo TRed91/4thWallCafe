@@ -5,4 +5,5 @@ public interface IAppConfiguration
     IServerRepository GetServerRepository();
     IItemRepository GetItemRepository();
     ICafeOrderRepository GetCafeOrderRepository();
+    ICustomerRepository GetCustomerRepository();
 }

@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>_4thWallCafe.API</RootNamespace>
+        <UserSecretsId>e5b7faf6-9763-4f28-a287-3a8e7845b808</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,5 +19,9 @@
     <ItemGroup>
       <ProjectReference Include="..\4thWallCafe.App\4thWallCafe.App.csproj" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
 
 </Project>

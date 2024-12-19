@@ -1,7 +1,7 @@
-using _4thWallCafe.Core.Interfaces;
+﻿using _4thWallCafe.Core.Interfaces;
 using _4thWallCafe.Data.Repositories;
 
-namespace _4thWallCafe.MVC;
+namespace _4thWallCafe.API;
 
 public class AppConfiguration : IAppConfiguration
 {
@@ -25,7 +25,7 @@ public class AppConfiguration : IAppConfiguration
     {
         return new CafeOrderRepository(_config["ConnectionString"]);
     }
-    
+
     public ICustomerRepository GetCustomerRepository()
     {
         return new CustomerRepository(_config["ConnectionString"]);

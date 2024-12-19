@@ -1,3 +1,5 @@
+using _4thWallCafe.API;
+using _4thWallCafe.App;
 using Serilog;
 using Serilog.Events;
 
@@ -22,6 +24,11 @@ builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose:
 
 builder.Services.AddControllers();
 
+// Provide ICustomerService for injection
+var config = new AppConfiguration(builder.Configuration);
+var sf = new ServiceFactory(config);
+builder.Services.AddScoped(_ => sf.GenerateCustomerService());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("e5b7faf6-9763-4f28-a287-3a8e7845b808")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb2ed099ee1c5f4d9195ff5ecffc4997e1054b8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90a79ba001702b7cf966b3bb237eba52e665d594")]
 [assembly: System.Reflection.AssemblyProductAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

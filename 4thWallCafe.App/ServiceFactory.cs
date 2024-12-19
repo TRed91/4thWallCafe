@@ -27,4 +27,9 @@ public class ServiceFactory
     {
         return new CafeOrderService(_config.GetCafeOrderRepository());
     }
+
+    public ICustomerService GenerateCustomerService()
+    {
+        return new CustomerService(_config.GetCustomerRepository());
+    }
 }
