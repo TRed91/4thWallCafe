@@ -11,4 +11,8 @@ public interface ICustomerRepository
     void AddCustomer(Customer customer);
     void UpdateCustomer(Customer customer);
     void DeleteCustomer(int customerId);
+    void AddCustomerOrder(CustomerOrder customerOrder);
+    CustomerOrder? GetCustomerOrderById(int customerOrderId);
+    void UpdateCustomerOrder(CustomerOrder customerOrder);
+    void DeleteCustomerOrder(int customerOrderId);
 }

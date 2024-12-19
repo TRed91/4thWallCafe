@@ -30,6 +30,8 @@ public class ServiceFactory
 
     public ICustomerService GenerateCustomerService()
     {
-        return new CustomerService(_config.GetCustomerRepository());
+        return new CustomerService(
+            _config.GetCustomerRepository(), 
+            _config.GetCafeOrderRepository());
     }
 }

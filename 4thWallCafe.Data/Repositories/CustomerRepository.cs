@@ -112,7 +112,7 @@ public class CustomerRepository : ICustomerRepository
         using (var cn = new SqlConnection(_connectionString))
         {
             var sql1 = @"DELETE FROM Customer WHERE CustomerID = @customerId";
-            var sql2 = @"DELETE FROM ApiOrder WHERE CustomerID = @customerId";
+            var sql2 = @"DELETE FROM CustomerOrder WHERE CustomerID = @customerId";
             var p = new { customerId };
             
             cn.Open();
@@ -122,6 +122,55 @@ public class CustomerRepository : ICustomerRepository
                 tran.Execute(sql1, p);
                 tran.Commit();
             }
+        }
+    }
+
+    public void AddCustomerOrder(CustomerOrder customerOrder)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO CustomerOrder (CustomerID, OrderID) 
+                        VALUES (@CustomerID, @OrderID);
+                        SELECT SCOPE_IDENTITY();";
+            var p = new { customerOrder.CustomerID, customerOrder.OrderID };
+            
+            customerOrder.CustomerOrderID = cn.ExecuteScalar<int>(sql, p);
+        }
+    }
+
+    public CustomerOrder? GetCustomerOrderById(int customerOrderId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT * FROM CustomerOrder WHERE CustomerOrderID = @customerOrderId";
+            return cn.QueryFirstOrDefault<CustomerOrder>(sql, new { customerOrderId });
+        }
+    }
+
+    public void UpdateCustomerOrder(CustomerOrder customerOrder)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE CustomerOrder SET 
+                         CustomerID = @CustomerID,
+                         OrderID = @OrderID
+                         WHERE CustomerOrderID = @CustomerOrderID;";
+            var p = new
+            {
+                customerOrder.CustomerID, 
+                customerOrder.OrderID, 
+                customerOrder.CustomerOrderID
+            };
+            cn.Execute(sql, p);
+        }
+    }
+
+    public void DeleteCustomerOrder(int customerOrderId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            cn.Execute("DELETE FROM CustomerOrder WHERE CustomerOrderID = @customerOrderId", 
+                new { customerOrderId });
         }
     }
 }

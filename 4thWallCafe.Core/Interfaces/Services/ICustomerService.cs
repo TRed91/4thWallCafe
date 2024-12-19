@@ -12,4 +12,8 @@ public interface ICustomerService
     Result AddCustomer(Customer customer);
     Result UpdateCustomer(Customer customer);
     Result DeleteCustomer(int customerId);
+    Result CreateOrder(CustomerOrder order);
+    Result<CustomerOrderModel> GetOrderById(int customerOrderId);
+    Result UpdateCustomerOrder(CustomerOrder customerOrder);
+    Result DeleteCustomerOrder(int customerOrderId);
 }

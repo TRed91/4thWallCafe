@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85b111a2adbb85f9a8a04ecc7bcdcea753e30469")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+298dca9602031e631340069770105cfdc76b67e1")]
 [assembly: System.Reflection.AssemblyProductAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("4thWallCafe.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

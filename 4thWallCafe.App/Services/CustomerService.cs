@@ -9,10 +9,12 @@ namespace _4thWallCafe.App.Services;
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
+    private readonly ICafeOrderRepository _cafeOrderRepository;
 
-    public CustomerService(ICustomerRepository customerRepository)
+    public CustomerService(ICustomerRepository customerRepository, ICafeOrderRepository cafeOrderRepository)
     {
         _customerRepository = customerRepository;
+        _cafeOrderRepository = cafeOrderRepository;
     }
     
     /// <summary>
@@ -105,6 +107,85 @@ public class CustomerService : ICustomerService
         try
         {
             _customerRepository.DeleteCustomer(customerId);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result CreateOrder(CustomerOrder order)
+    {
+        try
+        {
+            _customerRepository.AddCustomerOrder(order);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result<CustomerOrderModel> GetOrderById(int customerOrderId)
+    {
+        try
+        {
+            var customerOrder = _customerRepository.GetCustomerOrderById(customerOrderId);
+            if (customerOrder == null)
+            {
+                return ResultFactory.Fail<CustomerOrderModel>("Order not found");
+            }
+
+            var customer = _customerRepository.GetCustomerById(customerOrder.CustomerID);
+            var cafeOrder = _cafeOrderRepository.GetCafeOrder(customerOrder.OrderID);
+            customerOrder.Customer = customer;
+            customerOrder.Order = cafeOrder;
+            
+            var orderModel = new CustomerOrderModel
+            {
+                CustomerOrderID = customerOrder.CustomerOrderID,
+                OrderID = customerOrder.OrderID,
+                CustomerID = customerOrder.CustomerID,
+                Order = customerOrder.Order,
+                Customer = new CustomerModel(customerOrder.Customer),
+            };
+            
+            return ResultFactory.Success(orderModel);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<CustomerOrderModel>(ex.Message);
+        }
+    }
+
+    public Result UpdateCustomerOrder(CustomerOrder customerOrder)
+    {
+        try
+        {
+            _customerRepository.UpdateCustomerOrder(customerOrder);
+            _cafeOrderRepository.EditCafeOrder(customerOrder.Order);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result DeleteCustomerOrder(int customerOrderId)
+    {
+        try
+        {
+            var order = _customerRepository.GetCustomerOrderById(customerOrderId);
+            if (order == null)
+            {
+                return ResultFactory.Fail("Order not found");
+            }
+
+            _cafeOrderRepository.DeleteCafeOrder(order.OrderID);
+            _customerRepository.DeleteCustomerOrder(order.CustomerOrderID);
             return ResultFactory.Success();
         }
         catch (Exception ex)

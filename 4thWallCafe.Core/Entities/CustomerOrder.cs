@@ -1,8 +1,8 @@
 ﻿namespace _4thWallCafe.Core.Entities;
 
-public class ApiOrder
+public class CustomerOrder
 {
-    public int ApiOrderID { get; set; }
+    public int CustomerOrderID { get; set; }
     public int OrderID { get; set; }
     public int CustomerID { get; set; }
     
