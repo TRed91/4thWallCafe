@@ -60,6 +60,7 @@ public class UsersController : ControllerBase
         string hashedPassword = PasswordEncryption
             .HashPassword(form.Password, _config["Secret"]);
         
+        Console.WriteLine(hashedPassword);
         var customer = form.ToEntity();
         customer.Password = hashedPassword;
         
@@ -98,13 +99,14 @@ public class UsersController : ControllerBase
         customer.FirstName = form.FirstName;
         customer.LastName = form.LastName;
         customer.Email = form.Email;
-        customer.Password = form.Password;
         customer.Phone = form.Phone;
         customer.Street = form.Street;
         customer.City = form.City;
         customer.State = form.State;
         customer.ZipCode = form.ZipCode;
         customer.Country = form.Country;
+        customer.Password = PasswordEncryption
+            .HashPassword(form.Password, _config["Secret"]);
         
         var result = _customerService.UpdateCustomer(customer);
         if (!result.Ok)

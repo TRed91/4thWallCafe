@@ -3,7 +3,7 @@ using _4thWallCafe.Core.Entities;
 
 namespace _4thWallCafe.API.Models;
 
-public class CustomerForm
+public class CustomerForm : IValidatableObject
 {
     [Required]
     public string FirstName { get; set; }
@@ -44,5 +44,42 @@ public class CustomerForm
             State = State,
             ZipCode = ZipCode
         };
+    }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var errors = new List<ValidationResult>();
+
+        if (Password.Length < 8)
+        {
+            errors.Add(new ValidationResult("Password must be at least 8 characters", ["Password"]));
+        }
+        if (!Password.Any(char.IsDigit))
+        {
+            errors.Add(new ValidationResult("Password must contain a digit", ["Password"]));
+        }
+        if (!Password.Any(char.IsLower))
+        {
+            errors.Add(new ValidationResult("Password must contain a lowercase letter", ["Password"]));
+        }
+        if (!Password.Any(char.IsUpper))
+        {
+            errors.Add(new ValidationResult("Password must contain a uppercase letter", ["Password"]));
+        }
+        if (!Password.Any(char.IsSymbol))
+        {
+            errors.Add(new ValidationResult("Password must contain a symbol", ["Password"]));
+        }
+
+        if (FirstName.Any(c => !char.IsLetter(c)))
+        {
+            errors.Add(new ValidationResult("First name must contain only letters", ["FirstName"]));
+        }
+        if (LastName.Any(c => !char.IsLetter(c)))
+        {
+            errors.Add(new ValidationResult("Last name must contain only letters", ["LastName"]));
+        }
+        
+        return errors;
     }
 }
