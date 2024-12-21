@@ -30,7 +30,7 @@ if (builder.Configuration.GetValue<bool>("Logging:DbLogging:Enabled"))
 {
     loggerConfig.WriteTo.MSSqlServer(
         connectionString: builder.Configuration["ConnectionString"],
-        tableName: "LogEvents",
+        tableName: "API_LogEvents",
         appConfiguration: builder.Configuration,
         restrictedToMinimumLevel: config.GetDbLogEventLevel(),
         autoCreateSqlTable: true);

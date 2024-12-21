@@ -79,6 +79,7 @@ public class AccountController : Controller
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, "Invalid login attempt");
                 var msg = new TempDataMessage(false, ex.Message);
                 TempDataExtension.Put(TempData, "message", msg);
             }

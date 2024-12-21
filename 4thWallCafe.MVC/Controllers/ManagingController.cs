@@ -228,6 +228,8 @@ public class ManagingController : Controller
                 TempDataExtension.Put(TempData, "message", errMsg);
                 return RedirectToAction("Items");
             }
+            
+            _logger.LogInformation("Item edited: " + model.Form.ItemName);
             model.CategoryList = SelectlistFactory.CategorySL(categoriesResult.Data);
             return View(model);
         }

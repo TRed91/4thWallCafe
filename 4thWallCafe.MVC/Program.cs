@@ -3,6 +3,8 @@ using _4thWallCafe.MVC;
 using _4thWallCafe.MVC.db;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,25 @@ builder.Services.AddScoped(_ => sf.GenerateServerService());
 // Add logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+var loggerConfig = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console();
+
+if (builder.Configuration.GetValue<bool>("Logging:DbLogging:Enabled"))
+{
+    loggerConfig.WriteTo.MSSqlServer(
+        connectionString: builder.Configuration["ConnectionString"],
+        tableName: "MVC_LogEvents",
+        appConfiguration: builder.Configuration,
+        autoCreateSqlTable: true,
+        restrictedToMinimumLevel: config.GetDbLogEventLevel()
+        );
+}
+
+Log.Logger = loggerConfig.CreateLogger();
+
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
 builder.Services.AddControllersWithViews();
 

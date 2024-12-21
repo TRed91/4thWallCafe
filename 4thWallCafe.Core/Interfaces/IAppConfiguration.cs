@@ -1,3 +1,5 @@
+using Serilog.Events;
+
 namespace _4thWallCafe.Core.Interfaces;
 
 public interface IAppConfiguration
@@ -6,4 +8,5 @@ public interface IAppConfiguration
     IItemRepository GetItemRepository();
     ICafeOrderRepository GetCafeOrderRepository();
     ICustomerRepository GetCustomerRepository();
+    LogEventLevel GetDbLogEventLevel();
 }
