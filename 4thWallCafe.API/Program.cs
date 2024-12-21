@@ -1,5 +1,9 @@
+using System.Text;
 using _4thWallCafe.API;
+using _4thWallCafe.API.Authentication;
 using _4thWallCafe.App;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 
@@ -28,6 +32,25 @@ builder.Services.AddControllers();
 var config = new AppConfiguration(builder.Configuration);
 var sf = new ServiceFactory(config);
 builder.Services.AddScoped(_ => sf.GenerateCustomerService());
+builder.Services.AddScoped(_ => sf.GenerateCafeOrderService());
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+// Configure JWS Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Secret"])),
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 var app = builder.Build();
 

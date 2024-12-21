@@ -135,11 +135,20 @@ public class CustomerService : ICustomerService
             var customerOrder = _customerRepository.GetCustomerOrderById(customerOrderId);
             if (customerOrder == null)
             {
-                return ResultFactory.Fail<CustomerOrderModel>("Order not found");
+                return ResultFactory.Fail<CustomerOrderModel>("Customer Order not found");
             }
 
             var customer = _customerRepository.GetCustomerById(customerOrder.CustomerID);
+            if (customer == null)
+            {
+                return ResultFactory.Fail<CustomerOrderModel>("Customer not found");
+            }
             var cafeOrder = _cafeOrderRepository.GetCafeOrder(customerOrder.OrderID);
+            if (cafeOrder == null)
+            {
+                return ResultFactory.Fail<CustomerOrderModel>("Cafe Order not found");
+            }
+            
             customerOrder.Customer = customer;
             customerOrder.Order = cafeOrder;
             
@@ -184,8 +193,8 @@ public class CustomerService : ICustomerService
                 return ResultFactory.Fail("Order not found");
             }
 
-            _cafeOrderRepository.DeleteCafeOrder(order.OrderID);
             _customerRepository.DeleteCustomerOrder(order.CustomerOrderID);
+            _cafeOrderRepository.DeleteCafeOrder(order.OrderID);
             return ResultFactory.Success();
         }
         catch (Exception ex)

@@ -1,8 +1,10 @@
-﻿using _4thWallCafe.API.Models;
+﻿using _4thWallCafe.API.Authentication;
+using _4thWallCafe.API.Models;
 using _4thWallCafe.API.Utilities;
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces.Services;
 using _4thWallCafe.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _4thWallCafe.API.Controllers;
@@ -14,12 +16,14 @@ public class UsersController : ControllerBase
     private readonly ICustomerService _customerService;
     private readonly ILogger _logger;
     private readonly IConfiguration _config;
+    private readonly IJwtService _jwtService;
 
-    public UsersController(ICustomerService customerService, ILogger<UsersController> logger, IConfiguration config)
+    public UsersController(ICustomerService customerService, ILogger<UsersController> logger, IConfiguration config, IJwtService jwtService)
     {
         _customerService = customerService;
         _logger = logger;
         _config = config;
+        _jwtService = jwtService;
     }
     
     /// <summary>
@@ -30,6 +34,7 @@ public class UsersController : ControllerBase
     [HttpGet("{email}")]
     [ProducesResponseType(typeof(CustomerModel),StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
     public ActionResult<CustomerModel> GetCustomer(string email)
     {
         var result = _customerService.GetCustomerByEmail(email);
@@ -37,6 +42,12 @@ public class UsersController : ControllerBase
         {
             _logger.LogError(result.Message);
             return NotFound();
+        }
+
+        if (!_jwtService.ValidatePayload(result.Data.CustomerID, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
         }
         return Ok(result.Data);
     }
@@ -83,8 +94,14 @@ public class UsersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
     public ActionResult UpdateCustomer(int id, CustomerForm form)
     {
+        if (!_jwtService.ValidatePayload(id, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
+        }
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -124,8 +141,14 @@ public class UsersController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize]
     public ActionResult DeleteCustomer(int id)
     {
+        if (!_jwtService.ValidatePayload(id, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
+        }
         var result = _customerService.DeleteCustomer(id);
         if (!result.Ok)
         {

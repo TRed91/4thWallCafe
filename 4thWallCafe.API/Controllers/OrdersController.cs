@@ -1,11 +1,14 @@
-﻿using _4thWallCafe.API.Models;
+﻿using _4thWallCafe.API.Authentication;
+using _4thWallCafe.API.Models;
 using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces.Services;
 using _4thWallCafe.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _4thWallCafe.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class OrdersController : ControllerBase
@@ -13,15 +16,18 @@ public class OrdersController : ControllerBase
     private readonly ICustomerService _customerService;
     private readonly ICafeOrderService _cafeOrderService;
     private readonly ILogger _logger;
+    private readonly IJwtService _jwtService;
 
     public OrdersController(
         ICustomerService customerService, 
         ICafeOrderService cafeOrderService, 
-        ILogger<OrdersController> logger)
+        ILogger<OrdersController> logger,
+        IJwtService jwtService)
     {
         _customerService = customerService;
         _cafeOrderService = cafeOrderService;
         _logger = logger;
+        _jwtService = jwtService;
     }
     
     /// <summary>
@@ -32,6 +38,7 @@ public class OrdersController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
     public ActionResult CreateOrder(ApiOrderForm orderForm)
     {
         // Check if customer exists
@@ -40,6 +47,13 @@ public class OrdersController : ControllerBase
         {
             _logger.LogWarning($"Failed to fetch customer: {customerResult.Message}");
             return BadRequest("Invalid customer email");
+        }
+        
+        // Validate token
+        if (!_jwtService.ValidatePayload(customerResult.Data.CustomerID, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
         }
         
         // Create a CafeOrder record
@@ -76,19 +90,29 @@ public class OrdersController : ControllerBase
     /// <returns></returns>
     [HttpGet("{orderID}")]
     [ProducesResponseType(typeof(CustomerOrderModel),StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
     public ActionResult<CustomerOrderModel> GetOrder(int orderID)
     {
+        // fetch order
         var result = _customerService.GetOrderById(orderID);
         if (!result.Ok)
         {
             _logger.LogError($"Failed to fetch order: {result.Message}");
-            return StatusCode(500, "Internal server error");
+            return NotFound("Order not found");
+        }
+        
+        // validate token
+        if (!_jwtService.ValidatePayload(result.Data.CustomerID, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
         }
         return Ok(result.Data);
     }
 
     /// <summary>
-    /// Updated a Customer Order
+    /// Updates a Customer Order
     /// </summary>
     /// <param name="orderID"></param>
     /// <param name="orderForm"></param>
@@ -109,7 +133,14 @@ public class OrdersController : ControllerBase
         if (!customerOrderResult.Ok)
         {
             _logger.LogError($"Failed to fetch order: {customerOrderResult.Message}");
-            return StatusCode(500, "Internal server error");
+            return NotFound("Order not found");
+        }
+        
+        // Validate token
+        if (!_jwtService.ValidatePayload(customerOrderResult.Data.CustomerID, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
         }
         
         // See if a customer with the provided email exists
@@ -121,28 +152,30 @@ public class OrdersController : ControllerBase
         }
         
         // Update the CafeOrder Record
-        var updatedCafeOrder = orderForm.ToCafeOrder();
-        var cafeOrderUpdateResult = _cafeOrderService.UpdateCafeOrder(updatedCafeOrder);
-        if (!cafeOrderUpdateResult.Ok)
-        {
-            _logger.LogError($"Failed to update cafe order: {cafeOrderUpdateResult.Message}");
-            return StatusCode(500, "Internal server error");
-        }
+        var updatedOrder = customerOrderResult.Data.Order;
+        updatedOrder.SubTotal = orderForm.SubTotal;
+        updatedOrder.Tax = orderForm.Tax;
+        updatedOrder.Tip = orderForm.Tip;
+        updatedOrder.AmountDue = orderForm.AmountDue;
+        updatedOrder.PaymentTypeID = orderForm.PaymentTypeID;
+        updatedOrder.ServerID = orderForm.ServerID;
 
         // Update the CustomerOrder Record
-        var customerOrder = new CustomerOrder
+        var updatedCustomerOrder = new CustomerOrder
         {
+            CustomerOrderID = customerOrderResult.Data.CustomerOrderID,
             CustomerID = customerResult.Data.CustomerID,
-            OrderID = updatedCafeOrder.OrderID,
+            OrderID = updatedOrder.OrderID,
+            Order = updatedOrder,
         };
-        var result = _customerService.UpdateCustomerOrder(customerOrder);
+        var result = _customerService.UpdateCustomerOrder(updatedCustomerOrder);
         if (!result.Ok)
         {
             _logger.LogError($"Failed to update customer order: {result.Message}");
             return StatusCode(500, "Internal server error");
         }
         
-        _logger.LogInformation($"Successfully updated order with ID: {customerOrder.OrderID}");
+        _logger.LogInformation($"Successfully updated order with ID: {updatedCustomerOrder.OrderID}");
         return NoContent();
     }
 
@@ -164,6 +197,13 @@ public class OrdersController : ControllerBase
             return NotFound();
         }
         
+        // Validate token
+        if (!_jwtService.ValidatePayload(order.Data.CustomerID, HttpContext))
+        {
+            _logger.LogWarning("Invalid token.");
+            return Unauthorized();
+        }
+        
         // Delete the order
         var result = _customerService.DeleteCustomerOrder(orderID);
         if (!result.Ok)
@@ -171,6 +211,7 @@ public class OrdersController : ControllerBase
             _logger.LogError($"Failed to delete order: {result.Message}");
             return StatusCode(500, "Internal server error");
         }
+        
         _logger.LogInformation($"Successfully deleted order with ID: {orderID}");
         return NoContent();
     }
