@@ -9,6 +9,7 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var config = new AppConfiguration(builder.Configuration);
 // Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,20 +17,32 @@ builder.Services.AddSwaggerGen();
 // Configure Logger
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-Log.Logger = new LoggerConfiguration()
+var loggerConfig = new LoggerConfiguration()
     .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft.ApsNetCore", LogEventLevel.Warning)
     .WriteTo.Console()
     .WriteTo.File("logs.txt", 
         rollingInterval: RollingInterval.Day, 
-        rollOnFileSizeLimit: true)
-    .CreateLogger();
+        rollOnFileSizeLimit: true);
+
+    //Add Database Logging if Enables in appsettings.json
+if (builder.Configuration.GetValue<bool>("Logging:DbLogging:Enabled"))
+{
+    loggerConfig.WriteTo.MSSqlServer(
+        connectionString: builder.Configuration["ConnectionString"],
+        tableName: "LogEvents",
+        appConfiguration: builder.Configuration,
+        restrictedToMinimumLevel: config.GetDbLogEventLevel(),
+        autoCreateSqlTable: true);
+}
+
+Log.Logger = loggerConfig.CreateLogger();
+
 builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
 builder.Services.AddControllers();
 
 // Provide ICustomerService for injection
-var config = new AppConfiguration(builder.Configuration);
 var sf = new ServiceFactory(config);
 builder.Services.AddScoped(_ => sf.GenerateCustomerService());
 builder.Services.AddScoped(_ => sf.GenerateCafeOrderService());

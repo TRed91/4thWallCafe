@@ -81,6 +81,8 @@ public class UsersController : ControllerBase
             _logger.LogError(result.Message);
             return StatusCode(500, result.Message);
         }
+        
+        _logger.LogInformation($"Created new customer. Email: {customer.Email}, ID: {customer.CustomerID}");
         return Created();
     }
 
@@ -131,6 +133,8 @@ public class UsersController : ControllerBase
             _logger.LogError(result.Message);
             return StatusCode(500);
         }
+        
+        _logger.LogInformation($"Customer updated. ID: {id}");
         return NoContent();
     }
 
@@ -155,6 +159,8 @@ public class UsersController : ControllerBase
             _logger.LogError(result.Message);
             return StatusCode(500, result.Message);
         }
+        
+        _logger.LogInformation($"Customer has been deleted. ID: {id}");
         return NoContent();
     }
 }
