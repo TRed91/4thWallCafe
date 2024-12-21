@@ -65,6 +65,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Configure cors
+builder.Services.AddCors(options =>
+{
+    // Production policy
+    options.AddPolicy("AllowedOrigins",
+        policy =>
+        {
+            policy.WithOrigins(builder.Configuration["AllowedOrigins"]);
+        });
+    // Development only policy
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,8 +89,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    app.UseCors("AllowAllOrigins");
 }
 
+app.UseCors("AllowedOrigins");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

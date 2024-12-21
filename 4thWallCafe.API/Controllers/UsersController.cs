@@ -5,6 +5,7 @@ using _4thWallCafe.Core.Entities;
 using _4thWallCafe.Core.Interfaces.Services;
 using _4thWallCafe.Core.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _4thWallCafe.API.Controllers;

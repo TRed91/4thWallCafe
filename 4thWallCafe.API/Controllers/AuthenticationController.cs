@@ -3,6 +3,7 @@ using _4thWallCafe.API.Models;
 using _4thWallCafe.API.Utilities;
 using _4thWallCafe.App.Services;
 using _4thWallCafe.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _4thWallCafe.API.Controllers;
