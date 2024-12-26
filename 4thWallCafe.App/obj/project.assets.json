@@ -2309,7 +2309,6 @@
       "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallCafe\\4thWallCafe.App\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],

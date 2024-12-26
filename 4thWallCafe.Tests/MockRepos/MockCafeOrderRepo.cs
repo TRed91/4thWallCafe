@@ -6,7 +6,9 @@ namespace _4thWallCafe.Tests.MockRepos;
 public class MockCafeOrderRepo : ICafeOrderRepository
 {
     private readonly List<CafeOrder> _cafeOrders;
-    private int id;
+    private readonly List<OrderItem> _orderItems;
+    private int cafeOrderId;
+    private int orderItemId;
 
     public MockCafeOrderRepo()
     {
@@ -68,8 +70,21 @@ public class MockCafeOrderRepo : ICafeOrderRepository
                 PaymentTypeID = 2
             },
         };
+
+        _orderItems = new List<OrderItem>
+        {
+            new OrderItem
+            {
+                OrderItemID = 1,
+                OrderID = 1,
+                ItemPriceID = 1,
+                ExtendedPrice = 10.00m,
+                Quantity = 1,
+            }
+        };
         
-        id = _cafeOrders.Count;
+        cafeOrderId = _cafeOrders.Count + 1;
+        orderItemId = _orderItems.Count + 1;
     }
     public List<CafeOrder> GetCafeOrdersInTimeframe(DateOnly startDate, DateOnly endDate)
     {
@@ -85,13 +100,26 @@ public class MockCafeOrderRepo : ICafeOrderRepository
 
     public CafeOrder? GetCafeOrder(int orderId)
     {
-        return _cafeOrders.FirstOrDefault(o => o.OrderID == orderId);
+        var cafeOrder = _cafeOrders.FirstOrDefault(o => o.OrderID == orderId);
+        cafeOrder.OrderItems = _orderItems.Where(o => o.OrderID == orderId).ToList();
+        return cafeOrder;
+    }
+
+    public OrderItem? GetOrderItem(int orderItemId)
+    {
+        return _orderItems.FirstOrDefault(o => o.OrderItemID == orderItemId);
     }
 
     public void AddCafeOrder(CafeOrder cafeOrder)
     {
-        cafeOrder.OrderID = id++;
+        cafeOrder.OrderID = cafeOrderId++;
         _cafeOrders.Add(cafeOrder);
+    }
+
+    public void AddOrderItem(OrderItem orderItem)
+    {
+        orderItem.OrderItemID = orderItemId++;
+        _orderItems.Add(orderItem);
     }
 
     public void EditCafeOrder(CafeOrder cafeOrder)
@@ -100,8 +128,20 @@ public class MockCafeOrderRepo : ICafeOrderRepository
         _cafeOrders[index] = cafeOrder;
     }
 
+    public void EditOrderItem(OrderItem orderItem)
+    {
+        int index = _orderItems.FindIndex(o => o.OrderItemID == orderItem.OrderItemID);
+        _orderItems[index] = orderItem;
+    }
+
     public void DeleteCafeOrder(int orderId)
     {
         _cafeOrders.RemoveAll(o => o.OrderID == orderId);
+        _orderItems.RemoveAll(o => o.OrderID == orderId);
+    }
+
+    public void DeleteOrderItem(int orderItemId)
+    {
+        _orderItems.RemoveAll(o => o.OrderItemID == orderItemId);
     }
 }

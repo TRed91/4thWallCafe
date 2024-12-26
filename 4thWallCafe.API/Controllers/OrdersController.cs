@@ -85,6 +85,84 @@ public class OrdersController : ControllerBase
     }
 
     /// <summary>
+    /// Add an order item to an existing customer order
+    /// </summary>
+    /// <param name="customerOrderID"></param>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    [HttpPost("{customerOrderID}/items")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    public ActionResult AddOrderItem(int customerOrderID, OrderItemForm form)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var customerOrder = _customerService.GetOrderById(customerOrderID);
+        if (!customerOrder.Ok)
+        {
+            return NotFound("Order not found");
+        }
+        var result = _cafeOrderService.AddOrderItem(customerOrder.Data.OrderID, form);
+        if (!result.Ok)
+        {
+            _logger.LogError($"Failed to add order item: {result.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+        _logger.LogInformation($"Successfully added Order Item to Customer Order with ID {customerOrderID}");
+        return Created();
+    }
+
+    /// <summary>
+    /// Updates a single order item and the cafe order
+    /// </summary>
+    /// <param name="customerOrderID"></param>
+    /// <param name="itemID"></param>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    [HttpPut("{customerOrderID}/items/{itemID}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    public ActionResult UpdateOrderItem(int customerOrderID, int itemID, OrderItemForm form)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var updateResult = _cafeOrderService.UpdateOrderItem(itemID, form);
+        if (!updateResult.Ok)
+        {
+            _logger.LogError($"Failed to update order item: {updateResult.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Delete an order item and updates the cafeorder
+    /// </summary>
+    /// <param name="customerOrderID"></param>
+    /// <param name="itemID"></param>
+    /// <returns></returns>
+    [HttpDelete("{customerOrderID}/items/{itemID}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Authorize]
+    public ActionResult DeleteOrderItem(int customerOrderID, int itemID)
+    {
+        var deleteResult = _cafeOrderService.DeleteOrderItem(itemID);
+        if (!deleteResult.Ok)
+        {
+            _logger.LogError($"Failed to delete order item: {deleteResult.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+        return NoContent();
+    }
+
+    /// <summary>
     /// Get a CustomerOrder including Customer and CafeOrder Data
     /// </summary>
     /// <param name="orderID"></param>
@@ -154,10 +232,8 @@ public class OrdersController : ControllerBase
         
         // Update the CafeOrder Record
         var updatedOrder = customerOrderResult.Data.Order;
-        updatedOrder.SubTotal = orderForm.SubTotal;
-        updatedOrder.Tax = orderForm.Tax;
         updatedOrder.Tip = orderForm.Tip;
-        updatedOrder.AmountDue = orderForm.AmountDue;
+        updatedOrder.AmountDue = updatedOrder.SubTotal + updatedOrder.Tax + orderForm.Tip;
         updatedOrder.PaymentTypeID = orderForm.PaymentTypeID;
         updatedOrder.ServerID = orderForm.ServerID;
 

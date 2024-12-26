@@ -120,6 +120,8 @@ public class ReportsController : Controller
             return RedirectToAction("Orders");
         }
         
-        return View(result.Data);
+        var model = new OrderDetails(result.Data);
+        
+        return View(model);
     }
 }

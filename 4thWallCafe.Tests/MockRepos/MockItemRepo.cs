@@ -8,7 +8,9 @@ public class MockItemRepo : IItemRepository
 {
     private readonly List<Item> _items;
     private readonly List<Category> _categories;
+    private readonly List<ItemPrice> _itemPrices;
     private int itemId;
+    private int itemPriceId;
 
     public MockItemRepo()
     {
@@ -27,8 +29,38 @@ public class MockItemRepo : IItemRepository
             new Category { CategoryID = 2, CategoryName = "Sandwich" },
             new Category { CategoryID = 3, CategoryName = "Beer" },
         };
+
+        _itemPrices = new List<ItemPrice>
+        {
+            new ItemPrice
+            {
+                ItemPriceID = 1, ItemID = 1, TimeOfDayID = 1, StartDate = DateTime.Today, EndDate = DateTime.Today,
+                Price = 10.00m
+            },
+            new ItemPrice
+            {
+                ItemPriceID = 2, ItemID = 2, TimeOfDayID = 2, StartDate = DateTime.Today, EndDate = DateTime.Today,
+                Price = 15.00m
+            },
+            new ItemPrice
+            {
+                ItemPriceID = 3, ItemID = 3, TimeOfDayID = 3, StartDate = DateTime.Today, EndDate = DateTime.Today,
+                Price = 20.00m
+            },
+            new ItemPrice
+            {
+                ItemPriceID = 4, ItemID = 4, TimeOfDayID = 4, StartDate = DateTime.Today, EndDate = DateTime.Today,
+                Price = 5.00m
+            },
+            new ItemPrice
+            {
+                ItemPriceID = 5, ItemID = 5, TimeOfDayID = 5, StartDate = DateTime.Today, EndDate = DateTime.Today,
+                Price = 3.00m
+            },
+        };
         
-        itemId = _items.Count;
+        itemId = _items.Count + 1;
+        itemPriceId = _itemPrices.Count + 1;
     }
     
     public List<Item> GetAllItems()
@@ -58,7 +90,7 @@ public class MockItemRepo : IItemRepository
 
     public ItemPrice? GetItemPriceById(int id)
     {
-        throw new NotImplementedException();
+        return _itemPrices.FirstOrDefault(i => i.ItemPriceID == id);
     }
 
     public List<Category> GetCategories()
@@ -84,7 +116,8 @@ public class MockItemRepo : IItemRepository
 
     public void AddItemPrice(ItemPrice itemPrice)
     {
-        throw new NotImplementedException();
+        itemPrice.ItemPriceID = itemPriceId++;
+        _itemPrices.Add(itemPrice);
     }
 
     public void UpdateItem(Item item)
@@ -96,7 +129,8 @@ public class MockItemRepo : IItemRepository
 
     public void UpdateItemPrice(ItemPrice itemPrice)
     {
-        throw new NotImplementedException();
+        int index = _itemPrices.FindIndex(i => i.ItemPriceID == itemPrice.ItemPriceID);
+        _itemPrices[index] = itemPrice;
     }
 
     public void DeleteItem(int itemId)

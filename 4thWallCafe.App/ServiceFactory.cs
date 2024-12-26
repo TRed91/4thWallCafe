@@ -25,7 +25,7 @@ public class ServiceFactory
 
     public ICafeOrderService GenerateCafeOrderService()
     {
-        return new CafeOrderService(_config.GetCafeOrderRepository());
+        return new CafeOrderService(_config.GetCafeOrderRepository(), _config.GetItemRepository());
     }
 
     public ICustomerService GenerateCustomerService()

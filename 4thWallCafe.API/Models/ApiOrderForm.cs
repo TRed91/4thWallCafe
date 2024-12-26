@@ -1,19 +1,22 @@
-﻿using _4thWallCafe.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using _4thWallCafe.Core.Entities;
 
 namespace _4thWallCafe.API.Models;
 
 public class ApiOrderForm
 {
+    [Required]
+    [EmailAddress]
     public string CustomerEmail { get; set; }
+    [Required]
     public int ServerID { get; set; }
+    [Required]
     public int PaymentTypeID { get; set; }
-    public decimal SubTotal { get; set; }
-    public decimal Tax { get; set; }
+    [Required]
     public decimal Tip { get; set; }
-    public decimal AmountDue { get; set; }
 
     /// <summary>
-    /// Converts ApiOrderForm to CafeOrder
+    /// Converts ApiOrderForm to CafeOrder, SubTotal and Tax default to 0
     /// </summary>
     /// <returns></returns>
     public CafeOrder ToCafeOrder()
@@ -23,10 +26,10 @@ public class ApiOrderForm
             ServerID = ServerID,
             PaymentTypeID = PaymentTypeID,
             OrderDate = DateTime.Now,
-            SubTotal = SubTotal,
-            Tax = Tax,
+            SubTotal = 0.00m,
+            Tax = 0.00m,
             Tip = Tip,
-            AmountDue = AmountDue
+            AmountDue = Tip
         };
     }
 }

@@ -1,6 +1,6 @@
 ﻿using _4thWallCafe.Core.Entities;
 
-namespace _4thWallCafe.Core.Models;
+namespace _4thWallCafe.MVC.Models;
 
 public class OrderDetails
 {

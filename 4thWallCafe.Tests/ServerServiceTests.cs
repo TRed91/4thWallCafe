@@ -5,7 +5,7 @@ using _4thWallCafe.Tests.MockRepos;
 
 namespace _4thWallCafe.Tests;
 
-public class Tests
+public class ServerServiceTests
 {
     private ServerService _service = new ServerService(new MockServerRepo());
 

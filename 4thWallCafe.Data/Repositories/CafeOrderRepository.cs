@@ -136,6 +136,16 @@ public class CafeOrderRepository : ICafeOrderRepository
         }
     }
 
+    public OrderItem GetOrderItem(int orderItemId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.QueryFirstOrDefault<OrderItem>(
+                "SELECT * FROM OrderItem WHERE OrderItemID = @orderItemId;",
+                new { orderItemId });
+        }
+    }
+
     public void AddCafeOrder(CafeOrder cafeOrder)
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -154,6 +164,24 @@ public class CafeOrderRepository : ICafeOrderRepository
                 cafeOrder.AmountDue
             };
             cafeOrder.OrderID = cn.ExecuteScalar<int>(sql, p);
+        }
+    }
+
+    public void AddOrderItem(OrderItem orderItem)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO OrderItem (OrderID, ItemPriceID, Quantity, ExtendedPrice)
+                        VALUES (@OrderID, @ItemPriceID, @Quantity, @ExtendedPrice);
+                        SELECT SCOPE_IDENTITY();";
+            var p = new
+            {
+                orderItem.OrderID,
+                orderItem.ItemPriceID,
+                orderItem.Quantity,
+                orderItem.ExtendedPrice
+            };
+            orderItem.OrderItemID = cn.ExecuteScalar<int>(sql, p);
         }
     }
 
@@ -186,6 +214,26 @@ public class CafeOrderRepository : ICafeOrderRepository
         }
     }
 
+    public void EditOrderItem(OrderItem orderItem)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE OrderItem SET 
+                     ItemPriceID = @ItemPriceID, 
+                     Quantity = @Quantity, 
+                     ExtendedPrice = @ExtendedPrice
+                     WHERE OrderItemID = @OrderItemID;";
+            var p = new
+            {
+                orderItem.OrderItemID,
+                orderItem.ItemPriceID,
+                orderItem.Quantity,
+                orderItem.ExtendedPrice
+            };
+            cn.Execute(sql, p);
+        }
+    }
+
     public void DeleteCafeOrder(int orderId)
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -202,6 +250,16 @@ public class CafeOrderRepository : ICafeOrderRepository
                 transaction.Execute(sql1, p);
                 transaction.Commit();
             }
+        }
+    }
+
+    public void DeleteOrderItem(int orderItemId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            cn.Execute(
+                "DELETE FROM OrderItem WHERE OrderItemID = @orderItemId;", 
+                new { orderItemId });
         }
     }
 }

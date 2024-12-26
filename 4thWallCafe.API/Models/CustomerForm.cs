@@ -19,6 +19,10 @@ public class CustomerForm : IValidatableObject
     [MinLength(8)]
     public string Password { get; set; }
     [Required]
+    [MinLength(8)]
+    [Compare("Password")]
+    public string ConfirmPassword { get; set; }
+    [Required]
     public string Street { get; set; }
     [Required]
     public string City { get; set; }
